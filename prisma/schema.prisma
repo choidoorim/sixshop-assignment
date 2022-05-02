@@ -10,8 +10,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
+enum MetaType {
+  INT
+  BOOLEAN
+  STRING
+}
+
+model Customer {
+  id            String          @id @default(uuid())
+  store         String
+  name          String
+  email         String
+  password      String
+  customerMeta  CustomerMeta[]
+}
+
+model CustomerMeta {
+  id            String          @id @default(uuid())
+  type          MetaType
+  key           String
+  value         String?
+  required      Boolean
+  customer      Customer        @relation(fields: [customerId], references: [id])
+  customerId    String
+}
+
+model Product {
+  id            String          @id @default(uuid())
+  store         String
+  name          String
+  price         Int
+  categories    String[]
+  productMeta   ProductMeta[]
+}
+
+model ProductMeta {
+  id            String          @id @default(uuid())
+  type          MetaType
+  key           String
+  value         String?
+  required      Boolean
+  product       Product         @relation(fields: [productId], references: [id])
+  productId     String
+}
+
+model Order {
+  id            String          @id @default(uuid())
+  store         String
+  status        String
+  customer      String
+  products      String[]
+  price         Int
+  orderMeta     OrderMeta[]
+}
+
+model OrderMeta {
+  id            String          @id @default(uuid())
+  type          MetaType
+  key           String
+  value         String?
+  required      Boolean
+  order         Order         @relation(fields: [orderId], references: [id])
+  orderId       String
 }
