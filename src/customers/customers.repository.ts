@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { PrismaClient, Customer } from '@prisma/client';
-
-interface ICustomer {
-  name: Customer['name'];
-  email: Customer['email'];
-  password: Customer['password'];
-}
+import { PrismaClient, Customer, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CustomersRepository {
@@ -23,7 +17,7 @@ export class CustomersRepository {
 
   createCustomer(
     prismaConnection: PrismaClient,
-    { name, email, password }: ICustomer,
+    { name, email, password }: Prisma.CustomerCreateInput,
   ): Promise<Customer> {
     return prismaConnection.customer.create({
       data: {

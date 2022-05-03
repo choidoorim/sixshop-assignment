@@ -1,4 +1,4 @@
-import { Body, Get, Req } from '@nestjs/common';
+import { Body, Req } from '@nestjs/common';
 
 import { JwtToken } from '@app/utils';
 import { CustomerJwtRequestDto } from '@api/shared/dto';
