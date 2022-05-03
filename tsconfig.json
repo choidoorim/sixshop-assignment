@@ -29,6 +29,12 @@
       ],
       "@app/constants/*": [
         "libs/constants/src/*"
+      ],
+      "@app/prisma": [
+        "libs/prisma/src"
+      ],
+      "@app/prisma/*": [
+        "libs/prisma/src/*"
       ]
     }
   }
