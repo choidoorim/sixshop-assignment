@@ -1,4 +1,7 @@
-import { Body, Req } from '@nestjs/common';
+import { Body, Get, Req } from '@nestjs/common';
+
+import { JwtToken } from '@app/utils';
+import { CustomerJwtRequestDto } from '@api/shared/dto';
 
 import {
   AuthController as Controller,
@@ -6,12 +9,9 @@ import {
   LoginCustomer,
 } from './auth.controller.decorator';
 import { AuthService } from './auth.service';
-import { CreateCustomerBodyDto } from './dto';
-
-interface ILoginCustomerRequest {
-  customerId: string;
-  customerStoreId: string;
-}
+import { CreateCustomerBodyDto, LoginCustomerResponseDto } from './dto';
+import { ILoginCustomerRequest } from './type';
+import { JwtAuth } from './guard';
 
 @Controller()
 export class AuthController {
@@ -23,7 +23,15 @@ export class AuthController {
   }
 
   @LoginCustomer()
-  loginCustomer(@Req() { user }: { user: ILoginCustomerRequest }) {
-    return user;
+  async loginCustomer(@Req() { user }: { user: ILoginCustomerRequest }) {
+    return new LoginCustomerResponseDto({
+      accessToken: await this.authService.login(user),
+    });
   }
+
+  // @JwtAuth()
+  // @Get('/test')
+  // test(@JwtToken() { customerId }: CustomerJwtRequestDto) {
+  //   return customerId;
+  // }
 }

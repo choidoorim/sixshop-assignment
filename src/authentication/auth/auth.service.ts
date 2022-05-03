@@ -3,11 +3,13 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from '@app/prisma';
 import { generateHash, isMatch } from '@app/utils';
 
 import { CreateCustomerBodyDto } from './dto';
+import { ILoginCustomerRequest } from './type';
 import { CustomersService } from '../../customers/customers.service';
 import { CustomersRepository } from '../../customers/customers.repository';
 
@@ -17,6 +19,7 @@ export class AuthService {
     private readonly prismaService: PrismaService,
     private readonly customersService: CustomersService,
     private readonly customersRepository: CustomersRepository,
+    private jwtService: JwtService,
   ) {}
 
   validateCustomerForAuth = async (email: string, password: string) => {
@@ -53,5 +56,9 @@ export class AuthService {
     } catch (error) {
       throw new InternalServerErrorException({ message: error });
     }
+  };
+
+  login = async (payload: ILoginCustomerRequest) => {
+    return this.jwtService.sign(payload);
   };
 }
