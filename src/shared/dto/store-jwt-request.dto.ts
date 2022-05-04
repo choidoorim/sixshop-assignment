@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class AdminJwtRequestDto {
+export class StoreJwtRequestDto {
   @IsNotEmpty()
   @IsString()
   readonly store: string;

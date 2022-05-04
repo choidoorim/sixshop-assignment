@@ -5,7 +5,7 @@ import {
 import { Body } from '@nestjs/common';
 
 import { CustomerJwtRequestDto } from '@api/shared/dto';
-import { JwtToken } from '@app/utils';
+import { CustomerJwtToken } from '@app/utils';
 
 import { CustomersMetaService } from './customers-meta.service';
 import { CreateCustomerMetaFieldRequestBodyDto } from './dto';
@@ -17,7 +17,7 @@ export class CustomersMetaController {
   @CreateMetaField()
   createMetaField(
     @Body() createCustomerMetaField: CreateCustomerMetaFieldRequestBodyDto,
-    @JwtToken() { customerId }: CustomerJwtRequestDto,
+    @CustomerJwtToken() { customerId }: CustomerJwtRequestDto,
   ) {
     return customerId;
   }

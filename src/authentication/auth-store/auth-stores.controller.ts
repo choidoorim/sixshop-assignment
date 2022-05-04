@@ -1,4 +1,4 @@
-import { Body, Req } from '@nestjs/common';
+import { Body, Get, Req } from '@nestjs/common';
 
 import {
   AuthStoresController as Controller,
@@ -9,6 +9,9 @@ import { AuthStoresService } from './auth-stores.service';
 import { CreateStoreBodyDto } from './dto';
 import { ILoginStoreRequest } from './type';
 import { LoginStoreResponseDto } from './dto/login-store-response.dto';
+import { JwtStoreAuth } from '@app/utils/guard';
+import { StoreJwtRequestDto } from '@api/shared/dto';
+import { StoreJwtToken } from '@app/utils/store.decorator';
 
 @Controller()
 export class AuthStoresController {
@@ -24,5 +27,11 @@ export class AuthStoresController {
     return new LoginStoreResponseDto({
       accessToken: await this.authStoresService.login(user),
     });
+  }
+
+  @JwtStoreAuth()
+  @Get('test')
+  test(@StoreJwtToken() { store }: StoreJwtRequestDto) {
+    return store;
   }
 }
