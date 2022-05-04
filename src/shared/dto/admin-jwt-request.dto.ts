@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CustomerJwtRequestDto {
+export class AdminJwtRequestDto {
   @IsNotEmpty()
   @IsString()
-  readonly customerId: string;
+  readonly store: string;
 
   @IsNotEmpty()
   @IsString()

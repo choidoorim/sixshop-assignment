@@ -16,13 +16,26 @@ enum MetaType {
   STRING
 }
 
+model Admin {
+  id            String          @id @default(uuid())
+  email         String          @unique
+  password      String
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  customer      Customer[]
+  product       Product[]
+  order         Order[]
+}
+
 model Customer {
   id            String          @id @default(uuid())
-  store         String          @default(uuid()) @unique
   name          String
   email         String          @unique
   password      String
   customerMeta  CustomerMeta[]
+  store         String
+  admin         Admin           @relation(fields: [store], references: [id])
 }
 
 model CustomerMeta {
@@ -37,11 +50,12 @@ model CustomerMeta {
 
 model Product {
   id            String          @id @default(uuid())
-  store         String
   name          String
   price         Int
   categories    String[]
   productMeta   ProductMeta[]
+  store         String
+  admin         Admin           @relation(fields: [store], references: [id])
 }
 
 model ProductMeta {
@@ -56,12 +70,13 @@ model ProductMeta {
 
 model Order {
   id            String          @id @default(uuid())
-  store         String
   status        String
   customer      String
   products      String[]
   price         Int
   orderMeta     OrderMeta[]
+  store         String
+  admin         Admin           @relation(fields: [store], references: [id])
 }
 
 model OrderMeta {

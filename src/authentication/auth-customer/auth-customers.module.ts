@@ -3,8 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
 import { CustomersModule } from '../../customers/customers.module';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { AuthCustomersController } from './auth-customers.controller';
+import { AuthCustomersService } from './auth-customers.service';
 import { LocalStrategy, JwtStrategy } from './strategy';
 
 @Module({
@@ -20,8 +20,8 @@ import { LocalStrategy, JwtStrategy } from './strategy';
     }),
     CustomersModule,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  exports: [AuthService],
+  controllers: [AuthCustomersController],
+  providers: [AuthCustomersService, LocalStrategy, JwtStrategy],
+  exports: [AuthCustomersService],
 })
-export class AuthModule {}
+export class AuthCustomersModule {}

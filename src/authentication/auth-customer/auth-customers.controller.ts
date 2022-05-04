@@ -5,27 +5,27 @@ import { CustomerJwtRequestDto } from '@api/shared/dto';
 import { JwtAuth } from '@app/utils/guard';
 
 import {
-  AuthController as Controller,
+  AuthCustomerController as Controller,
   CreateCustomer,
   LoginCustomer,
-} from './auth.controller.decorator';
-import { AuthService } from './auth.service';
+} from './auth-customers.controller.decorator';
+import { AuthCustomersService } from './auth-customers.service';
 import { CreateCustomerBodyDto, LoginCustomerResponseDto } from './dto';
 import { ILoginCustomerRequest } from './type';
 
 @Controller()
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+export class AuthCustomersController {
+  constructor(private readonly authCustomersService: AuthCustomersService) {}
 
   @CreateCustomer()
   createCustomer(@Body() createCustomerBodyDto: CreateCustomerBodyDto) {
-    return this.authService.createCustomer(createCustomerBodyDto);
+    return this.authCustomersService.createCustomer(createCustomerBodyDto);
   }
 
   @LoginCustomer()
   async loginCustomer(@Req() { user }: { user: ILoginCustomerRequest }) {
     return new LoginCustomerResponseDto({
-      accessToken: await this.authService.login(user),
+      accessToken: await this.authCustomersService.login(user),
     });
   }
 

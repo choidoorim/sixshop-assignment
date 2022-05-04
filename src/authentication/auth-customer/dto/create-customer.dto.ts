@@ -16,4 +16,9 @@ export class CreateCustomerBodyDto {
   @IsNotEmpty()
   @IsString()
   readonly password: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly store: string;
 }

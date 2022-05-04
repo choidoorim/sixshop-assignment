@@ -14,7 +14,7 @@ import { CustomersService } from '../../customers/customers.service';
 import { CustomersRepository } from '../../customers/customers.repository';
 
 @Injectable()
-export class AuthService {
+export class AuthCustomersService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly customersService: CustomersService,
@@ -42,7 +42,12 @@ export class AuthService {
     }
   };
 
-  createCustomer = async ({ name, email, password }: CreateCustomerBodyDto) => {
+  createCustomer = async ({
+    name,
+    email,
+    password,
+    store,
+  }: CreateCustomerBodyDto) => {
     await this.validateCustomerByEmail(email);
 
     try {
@@ -50,6 +55,7 @@ export class AuthService {
         name,
         email,
         password: await generateHash(password),
+        store,
       });
 
       return null;

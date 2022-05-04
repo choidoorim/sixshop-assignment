@@ -3,8 +3,11 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { LocalAuth } from '@app/utils/guard';
 
-export const AuthController = () =>
-  applyDecorators(Controller({ path: 'auth' }), ApiTags('auth'));
+export const AuthCustomerController = () =>
+  applyDecorators(
+    Controller({ path: 'auth/customers' }),
+    ApiTags('auth-customers'),
+  );
 
 export const CreateCustomer = () => applyDecorators(Post('/register'));
 

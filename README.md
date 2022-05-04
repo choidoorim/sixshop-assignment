@@ -8,7 +8,7 @@
 
 ### Meta(커스텀 필드) 의 소유권은 고객에게 있다.
 
-### 누구나 상점을 소유하므로 토큰 payload 에 customerId, store 를 함께 담는다.
+### 한 사람당 하나의 상점을 열 수 있다는 가정하에 진행하였다.
 
 ## Customers
 ### 1. 회원가입 - /auth/register
