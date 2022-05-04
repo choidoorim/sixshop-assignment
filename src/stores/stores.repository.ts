@@ -10,4 +10,14 @@ export class StoresRepository {
     prismaClient.store.create({
       data,
     });
+
+  findByEmail = (
+    prismaClient: PrismaClient,
+    email: string,
+  ): Promise<Store | null> =>
+    prismaClient.store.findUnique({
+      where: {
+        email,
+      },
+    });
 }

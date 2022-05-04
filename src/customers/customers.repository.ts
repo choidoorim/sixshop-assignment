@@ -3,7 +3,7 @@ import { PrismaClient, Customer, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CustomersRepository {
-  findUserByEmail = (
+  findByEmail = (
     prismaConnection: PrismaClient,
     email: string,
   ): Promise<Customer | null> =>

@@ -1,7 +1,7 @@
 import { applyDecorators, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { LocalAuth } from '@app/utils/guard';
+import { LocalCustomerAuth } from '@app/utils/guard';
 
 export const AuthCustomerController = () =>
   applyDecorators(
@@ -11,4 +11,5 @@ export const AuthCustomerController = () =>
 
 export const CreateCustomer = () => applyDecorators(Post('/register'));
 
-export const LoginCustomer = () => applyDecorators(Post('/login'), LocalAuth());
+export const LoginCustomer = () =>
+  applyDecorators(Post('/login'), LocalCustomerAuth());

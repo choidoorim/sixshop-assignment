@@ -12,5 +12,5 @@ export class CustomersService {
   ) {}
 
   findCustomerByEmail = (email: string): Promise<Customer | null> =>
-    this.customersRepository.findUserByEmail(this.prismaService, email);
+    this.customersRepository.findByEmail(this.prismaService, email);
 }

@@ -7,7 +7,10 @@ import { Customer } from '@prisma/client';
 import { AuthCustomersService } from '../auth-customers.service';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalCustomerStrategy extends PassportStrategy(
+  Strategy,
+  'local-customer',
+) {
   constructor(private authCustomersService: AuthCustomersService) {
     super({ usernameField: 'email' });
   }

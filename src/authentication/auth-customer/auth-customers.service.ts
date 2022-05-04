@@ -32,10 +32,8 @@ export class AuthCustomersService {
   };
 
   private validateCustomerByEmail = async (email: string) => {
-    const customerResult = await this.customersService.findCustomerByEmail(
-      email,
-    );
-    if (customerResult) {
+    const customer = await this.customersService.findCustomerByEmail(email);
+    if (customer) {
       throw new ForbiddenException(
         '이미 존재하는 회원입니다. 로그인 해주세요.',
       );
@@ -64,7 +62,6 @@ export class AuthCustomersService {
     }
   };
 
-  login = async (payload: ILoginCustomerRequest) => {
-    return this.jwtService.sign(payload);
-  };
+  login = async (payload: ILoginCustomerRequest) =>
+    this.jwtService.sign(payload);
 }
