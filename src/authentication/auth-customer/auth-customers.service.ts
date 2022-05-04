@@ -2,6 +2,7 @@ import {
   ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -24,6 +25,9 @@ export class AuthCustomersService {
 
   validateCustomerForAuth = async (email: string, password: string) => {
     const customer = await this.customersService.findCustomerByEmail(email);
+    if (!customer) {
+      throw new NotFoundException();
+    }
     if (customer && (await isMatch(customer.password, password))) {
       const { password, ...rest } = customer;
       return rest;
@@ -34,9 +38,7 @@ export class AuthCustomersService {
   private validateCustomerByEmail = async (email: string) => {
     const customer = await this.customersService.findCustomerByEmail(email);
     if (customer) {
-      throw new ForbiddenException(
-        '이미 존재하는 회원입니다. 로그인 해주세요.',
-      );
+      throw new ForbiddenException('이미 존재하는 회원입니다. 로그인 해주세요');
     }
   };
 

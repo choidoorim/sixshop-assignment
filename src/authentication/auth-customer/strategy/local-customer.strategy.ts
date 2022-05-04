@@ -19,7 +19,7 @@ export class LocalCustomerStrategy extends PassportStrategy(
     const customer: Omit<Customer, 'password'> | null =
       await this.authCustomersService.validateCustomerForAuth(email, password);
     if (!customer) {
-      throw new UnauthorizedException('비밀번호 인증 실패');
+      throw new UnauthorizedException('로그인 인증 실패');
     }
     return { customerId: customer.id };
   }

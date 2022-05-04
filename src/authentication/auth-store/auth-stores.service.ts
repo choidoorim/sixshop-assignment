@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from '@app/prisma';
@@ -20,6 +24,9 @@ export class AuthStoresService {
 
   validateStoreForAuth = async (email: string, password: string) => {
     const store = await this.storesService.findStoreByEmail(email);
+    if (!store) {
+      throw new NotFoundException();
+    }
     if (store && (await isMatch(store.password, password))) {
       const { password, ...rest } = store;
       return rest;
