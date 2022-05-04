@@ -6,7 +6,7 @@ import { PrismaModule } from '@app/prisma';
 
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CustomersModule } from './customers/customers.module';
-import { StoreModule } from './store/store.module';
+import { StoresModule } from './stores/stores.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { StoreModule } from './store/store.module';
     AuthenticationModule,
     CustomersModule,
     PrismaModule,
-    StoreModule,
+    StoresModule,
   ],
   providers: [
     {
