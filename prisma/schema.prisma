@@ -16,75 +16,110 @@ enum MetaType {
   STRING
 }
 
-model Admin {
-  id            String          @id @default(uuid())
-  email         String          @unique
-  password      String
-  name          String
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  customer      Customer[]
-  product       Product[]
-  order         Order[]
+model Store {
+  id                    String          @id @default(uuid())
+  email                 String          @unique
+  password              String
+  name                  String
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  Customer              Customer[]
+  CustomerCustomFields  CustomerCustomFields[]
+  Product               Product[]
+  ProductCustomFields   ProductCustomFields[]
+  Order                 Order[]
+  OrderCustomFields     OrderCustomFields[]
 }
 
 model Customer {
-  id            String          @id @default(uuid())
-  name          String
-  email         String          @unique
-  password      String
-  customerMeta  CustomerMeta[]
-  store         String
-  admin         Admin           @relation(fields: [store], references: [id])
+  id                        String                  @id @default(uuid())
+  name                      String
+  email                     String                  @unique
+  password                  String
+  store                     String
+  Store                     Store                   @relation(fields: [store], references: [id])
+  Order                     Order[]
+  CustomerCustomFieldsData  CustomerCustomFieldsData[]
 }
 
-model CustomerMeta {
-  id            String          @id @default(uuid())
-  type          MetaType
-  key           String
-  value         String?
-  required      Boolean
-  customer      Customer        @relation(fields: [customerId], references: [id])
-  customerId    String
+model CustomerCustomFields {
+  id                        String                      @id @default(uuid())
+  type                      MetaType
+  key                       String
+  required                  Boolean
+  store                     String
+  Store                     Store                       @relation(fields: [store], references: [id])
+  CustomerCustomFieldsData  CustomerCustomFieldsData[]
+}
+
+model CustomerCustomFieldsData {
+  id                    String                  @id @default(uuid())
+  customFieldsId        String
+  CustomerCustomFields  CustomerCustomFields    @relation(fields: [customFieldsId], references: [id])
+  customerId            String
+  Customer              Customer                @relation(fields: [customerId], references: [id])
+  value                 String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model Product {
-  id            String          @id @default(uuid())
-  name          String
-  price         Int
-  categories    String[]
-  productMeta   ProductMeta[]
-  store         String
-  admin         Admin           @relation(fields: [store], references: [id])
+  id                        String                      @id @default(uuid())
+  name                      String
+  price                     Int
+  categories                String[]
+  store                     String
+  Store                     Store                       @relation(fields: [store], references: [id])
+  ProductCustomFieldsData   ProductCustomFieldsData[]
 }
 
-model ProductMeta {
-  id            String          @id @default(uuid())
-  type          MetaType
-  key           String
-  value         String?
-  required      Boolean
-  product       Product         @relation(fields: [productId], references: [id])
-  productId     String
+model ProductCustomFields {
+  id                        String                      @id @default(uuid())
+  type                      MetaType
+  key                       String
+  value                     String?
+  required                  Boolean
+  store                     String
+  Store                     Store                       @relation(fields: [store], references: [id])
+  ProductCustomFieldsData   ProductCustomFieldsData[]
+}
+
+model ProductCustomFieldsData {
+  id                    String                  @id @default(uuid())
+  value                 String
+  productCustomFieldId  String
+  ProductCustomFields   ProductCustomFields     @relation(fields: [productCustomFieldId], references: [id])
+  productId             String
+  product               Product                 @relation(fields: [productId], references: [id])
 }
 
 model Order {
-  id            String          @id @default(uuid())
-  status        String
-  customer      String
-  products      String[]
-  price         Int
-  orderMeta     OrderMeta[]
-  store         String
-  admin         Admin           @relation(fields: [store], references: [id])
+  id                    String                  @id @default(uuid())
+  status                String
+  customer              String
+  Customer              Customer                @relation(fields: [customer], references: [id])
+  products              String[]
+  price                 Int
+  store                 String
+  Store                 Store                   @relation(fields: [store], references: [id])
+  OrderCustomFieldsData OrderCustomFieldsData[]
 }
 
-model OrderMeta {
-  id            String          @id @default(uuid())
-  type          MetaType
-  key           String
-  value         String?
-  required      Boolean
-  order         Order         @relation(fields: [orderId], references: [id])
-  orderId       String
+model OrderCustomFields {
+  id                    String                  @id @default(uuid())
+  type                  MetaType
+  key                   String
+  required              Boolean
+  store                 String
+  Store                 Store                   @relation(fields: [store], references: [id])
+  OrderCustomFieldsData OrderCustomFieldsData[]
+}
+
+model OrderCustomFieldsData {
+  id                        String              @id @default(uuid())
+  value                     String
+  orderCustomFieldId        String
+  OrderCustomFields         OrderCustomFields   @relation(fields: [orderCustomFieldId], references: [id])
+  orderId                   String
+  Order                     Order               @relation(fields: [orderId], references: [id])
 }

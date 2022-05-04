@@ -17,6 +17,6 @@ export class CustomersMetaService {
     customerId: string,
   ) => {
     const payload = { ...createCustomerMetaField, customerId };
-    return this.customersMetaRepository.createMeta(this.prismaService, payload);
+    return payload;
   };
 }
