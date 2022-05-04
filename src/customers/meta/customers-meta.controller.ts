@@ -1,4 +1,21 @@
-import { CustomerMetaController } from './customers.controller.decorator';
+import {
+  CustomerMetaController as Controller,
+  CreateMetaField,
+} from './customers.controller.decorator';
+import { Body } from '@nestjs/common';
 
-@CustomerMetaController()
-export class CustomersMetaController {}
+import { CustomerJwtRequestDto } from '@api/shared/dto';
+import { JwtToken } from '@app/utils';
+
+import { CreateCustomerMetaFieldRequestBodyDto } from './dto';
+
+@Controller()
+export class CustomersMetaController {
+  @CreateMetaField()
+  createMetaField(
+    @Body() createCustomerMetaField: CreateCustomerMetaFieldRequestBodyDto,
+    @JwtToken() { customerId }: CustomerJwtRequestDto,
+  ) {
+    return createCustomerMetaField;
+  }
+}

@@ -2,6 +2,7 @@ import { Body, Req } from '@nestjs/common';
 
 import { JwtToken } from '@app/utils';
 import { CustomerJwtRequestDto } from '@api/shared/dto';
+import { JwtAuth } from '@app/utils/guard';
 
 import {
   AuthController as Controller,
@@ -11,7 +12,6 @@ import {
 import { AuthService } from './auth.service';
 import { CreateCustomerBodyDto, LoginCustomerResponseDto } from './dto';
 import { ILoginCustomerRequest } from './type';
-import { JwtAuth } from './guard';
 
 @Controller()
 export class AuthController {
