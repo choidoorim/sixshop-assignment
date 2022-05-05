@@ -6,12 +6,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AdminJwtRequestDto } from '@api/shared/dto';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt-admin') {
   constructor(private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get('ACCESS_TOKEN_SECRET_KEY'),
+      secretOrKey: configService.get('ADMIN_ACCESS_TOKEN_SECRET_KEY'),
     });
   }
 
