@@ -9,7 +9,7 @@ import {
   GetCustomerMetaResponseDto,
 } from './dto';
 
-export const CustomerMetaController = () =>
+export const CustomersMetaController = () =>
   applyDecorators(Controller({ path: 'customer' }), ApiTags('customer-meta'));
 
 export const CreateMetaField = () =>

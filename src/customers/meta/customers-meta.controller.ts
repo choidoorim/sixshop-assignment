@@ -1,8 +1,8 @@
 import {
-  CustomerMetaController as Controller,
+  CustomersMetaController as Controller,
   CreateMetaField,
   GetCustomerMetaField,
-} from './customers.controller.decorator';
+} from './customers-meta.controller.decorator';
 import { Body } from '@nestjs/common';
 
 import { StoreJwtRequestDto } from '@api/shared/dto';
