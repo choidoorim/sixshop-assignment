@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { StoresModule } from '../../stores/stores.module';
+import { AdminModule } from '../../admin/admin.module';
 import { LocalAdminStrategy } from './strategy/local-admin.strategy';
 
 @Module({
@@ -21,7 +21,7 @@ import { LocalAdminStrategy } from './strategy/local-admin.strategy';
         },
       }),
     }),
-    StoresModule,
+    AdminModule,
     PassportModule,
   ],
   controllers: [AuthController],

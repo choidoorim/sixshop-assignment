@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { PrismaModule } from '@app/prisma';
 
-import { StoresModule } from './stores/stores.module';
+import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
       isGlobal: true,
     }),
     PrismaModule,
-    StoresModule,
+    AdminModule,
     AuthenticationModule,
   ],
   providers: [

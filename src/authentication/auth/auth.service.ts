@@ -3,27 +3,27 @@ import { JwtService } from '@nestjs/jwt';
 
 import { isMatch } from '@app/utils';
 
-import { StoresService } from '../../stores/stores.service';
+import { AdminService } from '../../admin/admin.service';
 import { CreateAdminRequestDto } from './dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly storesService: StoresService,
+    private readonly adminService: AdminService,
     private jwtService: JwtService,
   ) {}
 
   validateStore = async (email: string, password: string) => {
-    const store = await this.storesService.findStoreByEmail(email);
-    if (store && (await isMatch(store.password, password))) {
-      const { password, ...rest } = store;
+    const admin = await this.adminService.findStoreByEmail(email);
+    if (admin && (await isMatch(admin.password, password))) {
+      const { password, ...rest } = admin;
       return rest;
     }
     return null;
   };
 
   createAdmin = async (createAdminRequestDto: CreateAdminRequestDto) => {
-    await this.storesService.createAdmin(createAdminRequestDto);
+    await this.adminService.createAdmin(createAdminRequestDto);
 
     return null;
   };

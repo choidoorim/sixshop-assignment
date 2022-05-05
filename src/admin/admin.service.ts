@@ -3,16 +3,16 @@ import { Admin } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
-import { StoresRepository } from './stores.repository';
+import { AdminRepository } from './admin.repository';
 import { generateHash } from '@app/utils';
 
 import { CreateAdminRequestDto } from '../authentication/auth/dto';
 
 @Injectable()
-export class StoresService {
+export class AdminService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly storesRepository: StoresRepository,
+    private readonly storesRepository: AdminRepository,
   ) {}
 
   private validateAdminByEmail = async (email: string): Promise<void> => {
