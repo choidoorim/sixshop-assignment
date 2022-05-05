@@ -6,7 +6,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AdminJwtRequestDto } from '@api/shared/dto';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt-admin') {
+export class JwtAdminStrategy extends PassportStrategy(Strategy, 'jwt-admin') {
   constructor(private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

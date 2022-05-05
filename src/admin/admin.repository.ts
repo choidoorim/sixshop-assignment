@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, Prisma, Admin } from '@prisma/client';
+import { Prisma, Admin } from '@prisma/client';
+
+import { PrismaConnection } from '@app/prisma/type';
 
 @Injectable()
 export class AdminRepository {
   createAdmin = (
-    prismaClient: PrismaClient,
+    prismaConnection: PrismaConnection,
     data: Prisma.AdminCreateManyInput,
   ): Promise<Admin> =>
-    prismaClient.admin.create({
+    prismaConnection.admin.create({
       data,
     });
 
   findByEmail = (
-    prismaClient: PrismaClient,
+    prismaConnection: PrismaConnection,
     email: string,
   ): Promise<Admin | null> =>
-    prismaClient.admin.findUnique({
+    prismaConnection.admin.findUnique({
       where: {
         email,
       },

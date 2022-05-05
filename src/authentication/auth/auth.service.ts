@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   validateStore = async (email: string, password: string) => {
-    const admin = await this.adminService.findStoreByEmail(email);
+    const admin = await this.adminService.findAdminByEmail(email);
     if (admin && (await isMatch(admin.password, password))) {
       const { password, ...rest } = admin;
       return rest;
