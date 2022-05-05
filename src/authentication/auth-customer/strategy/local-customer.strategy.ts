@@ -22,6 +22,6 @@ export class LocalCustomerStrategy extends PassportStrategy(
     if (!customer) {
       throw new UnauthorizedException('로그인 인증 실패');
     }
-    return { customerId: customer.id, role: Role.CUSTOMER };
+    return { customerId: customer.id };
   }
 }

@@ -12,9 +12,11 @@ import { LocalCustomerStrategy, JwtCustomerStrategy } from './strategy';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('ACCESS_TOKEN_SECRET_KEY'),
+        secret: configService.get<string>('CUSTOMER_ACCESS_TOKEN_SECRET_KEY'),
         signOptions: {
-          expiresIn: configService.get<string>('ACCESS_TOKEN_EXPIRATION_TIME'),
+          expiresIn: configService.get<string>(
+            'CUSTOMER_ACCESS_TOKEN_EXPIRATION_TIME',
+          ),
         },
       }),
     }),

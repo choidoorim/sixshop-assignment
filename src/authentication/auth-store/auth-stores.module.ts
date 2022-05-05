@@ -13,9 +13,11 @@ import { JwtStoreStrategy, LocalStoreStrategy } from './strategy';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('ACCESS_TOKEN_SECRET_KEY'),
+        secret: configService.get<string>('STORE_ACCESS_TOKEN_SECRET_KEY'),
         signOptions: {
-          expiresIn: configService.get<string>('ACCESS_TOKEN_EXPIRATION_TIME'),
+          expiresIn: configService.get<string>(
+            'STORE_ACCESS_TOKEN_EXPIRATION_TIME',
+          ),
         },
       }),
     }),

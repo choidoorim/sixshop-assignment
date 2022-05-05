@@ -7,10 +7,6 @@ export class CustomerJwtRequestDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly role: string;
-
-  @IsNotEmpty()
-  @IsString()
   readonly iat: number;
 
   @IsNotEmpty()

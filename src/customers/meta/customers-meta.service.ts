@@ -14,9 +14,9 @@ export class CustomersMetaService {
 
   createCustomerMeta = (
     createCustomerMetaField: CreateCustomerMetaFieldBodyRequestDto,
-    customerId: string,
+    store: string,
   ) => {
-    const payload = { ...createCustomerMetaField, customerId };
+    const payload = { ...createCustomerMetaField, store };
     return payload;
   };
 }
