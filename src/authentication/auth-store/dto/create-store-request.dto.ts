@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
 
-export class CreateCustomerBodyDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  readonly name: string;
-
+export class CreateStoreBodyRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
@@ -20,5 +15,5 @@ export class CreateCustomerBodyDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly store: string;
+  readonly name: string;
 }

@@ -9,7 +9,7 @@ import { PrismaService } from '@app/prisma';
 import { generateHash, isMatch } from '@app/utils';
 
 import { StoresRepository } from '../../stores/stores.repository';
-import { CreateStoreBodyDto } from './dto';
+import { CreateStoreBodyRequestDto } from './dto';
 import { StoresService } from '../../stores/stores.service';
 import { ILoginStoreRequest } from './type';
 
@@ -34,7 +34,11 @@ export class AuthStoresService {
     return null;
   };
 
-  createStore = async ({ name, email, password }: CreateStoreBodyDto) => {
+  createStore = async ({
+    name,
+    email,
+    password,
+  }: CreateStoreBodyRequestDto) => {
     try {
       await this.storesRepository.createStore(this.prismaService, {
         name,

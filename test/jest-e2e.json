@@ -16,6 +16,8 @@
     "@app/constants/(.*)": "<rootDir>/../libs/constants/src/$1",
     "@app/constants": "<rootDir>/../libs/constants/src",
     "@app/prisma/(.*)": "<rootDir>/../libs/prisma/src/$1",
-    "@app/prisma": "<rootDir>/../libs/prisma/src"
+    "@app/prisma": "<rootDir>/../libs/prisma/src",
+    "@app/config/(.*)": "<rootDir>/../libs/config/src/$1",
+    "@app/config": "<rootDir>/../libs/config/src"
   }
 }

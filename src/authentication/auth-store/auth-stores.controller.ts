@@ -6,7 +6,7 @@ import {
   LoginStore,
 } from './auth-stores.controller.decorator';
 import { AuthStoresService } from './auth-stores.service';
-import { CreateStoreBodyDto } from './dto';
+import { CreateStoreBodyRequestDto } from './dto';
 import { ILoginStoreRequest } from './type';
 import { LoginStoreResponseDto } from './dto/login-store-response.dto';
 import { JwtStoreAuth } from '@app/utils/guard';
@@ -18,7 +18,7 @@ export class AuthStoresController {
   constructor(private readonly authStoresService: AuthStoresService) {}
 
   @CreateStore()
-  createStore(@Body() createStoreBodyDto: CreateStoreBodyDto) {
+  createStore(@Body() createStoreBodyDto: CreateStoreBodyRequestDto) {
     return this.authStoresService.createStore(createStoreBodyDto);
   }
 

@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '@app/prisma';
 import { generateHash, isMatch } from '@app/utils';
 
-import { CreateCustomerBodyDto } from './dto';
+import { CreateCustomerBodyRequestDto } from './dto';
 import { ILoginCustomerRequest } from './type';
 import { CustomersService } from '../../customers/customers.service';
 import { CustomersRepository } from '../../customers/customers.repository';
@@ -47,7 +47,7 @@ export class AuthCustomersService {
     email,
     password,
     store,
-  }: CreateCustomerBodyDto) => {
+  }: CreateCustomerBodyRequestDto) => {
     await this.validateCustomerByEmail(email);
 
     try {
