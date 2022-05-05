@@ -31,7 +31,7 @@ export class AuthStoresController {
 
   @JwtStoreAuth()
   @Get('test')
-  test(@StoreJwtToken() { store }: StoreJwtRequestDto) {
-    return store;
+  test(@StoreJwtToken() { store, role }: StoreJwtRequestDto) {
+    return { store, role };
   }
 }

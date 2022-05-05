@@ -1,7 +1,7 @@
 import { MetaType } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsString, IsBoolean } from 'class-validator';
 
-export class CreateCustomerMetaFieldRequestBodyDto {
+export class CreateCustomerMetaFieldBodyRequestDto {
   @IsEnum(MetaType)
   @IsNotEmpty()
   readonly type: MetaType;

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma, CustomerCustomFields } from '@prisma/client';
 
 @Injectable()
 export class CustomersMetaRepository {
-  // createMeta = (
-  //   prismaConnection: PrismaClient,
-  //   data: Prisma.CustomerMetaUncheckedCreateInput,
-  // ): Promise<CustomerMeta> =>
-  //   prismaConnection.cus .create({
-  //     data,
-  //   });
+  createMeta = (
+    prismaConnection: PrismaClient,
+    data: Prisma.CustomerCustomFieldsUncheckedCreateInput,
+  ): Promise<CustomerCustomFields> =>
+    prismaConnection.customerCustomFields.create({
+      data,
+    });
 }

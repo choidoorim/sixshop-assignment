@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@app/prisma';
 
 import { CustomersMetaRepository } from './customers-meta.repository';
-import { CreateCustomerMetaFieldRequestBodyDto } from './dto';
+import { CreateCustomerMetaFieldBodyRequestDto } from './dto';
 
 @Injectable()
 export class CustomersMetaService {
@@ -13,7 +13,7 @@ export class CustomersMetaService {
   ) {}
 
   createCustomerMeta = (
-    createCustomerMetaField: CreateCustomerMetaFieldRequestBodyDto,
+    createCustomerMetaField: CreateCustomerMetaFieldBodyRequestDto,
     customerId: string,
   ) => {
     const payload = { ...createCustomerMetaField, customerId };

@@ -1,8 +1,9 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-
 import { Customer } from '@prisma/client';
+
+import { Role } from '@app/constants';
 
 import { AuthCustomersService } from '../auth-customers.service';
 
@@ -21,6 +22,6 @@ export class LocalCustomerStrategy extends PassportStrategy(
     if (!customer) {
       throw new UnauthorizedException('로그인 인증 실패');
     }
-    return { customerId: customer.id };
+    return { customerId: customer.id, role: Role.CUSTOMER };
   }
 }

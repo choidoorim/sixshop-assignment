@@ -8,7 +8,7 @@ import { CustomerJwtRequestDto } from '@api/shared/dto';
 import { CustomerJwtToken } from '@app/utils';
 
 import { CustomersMetaService } from './customers-meta.service';
-import { CreateCustomerMetaFieldRequestBodyDto } from './dto';
+import { CreateCustomerMetaFieldBodyRequestDto } from './dto';
 
 @Controller()
 export class CustomersMetaController {
@@ -16,7 +16,7 @@ export class CustomersMetaController {
 
   @CreateMetaField()
   createMetaField(
-    @Body() createCustomerMetaField: CreateCustomerMetaFieldRequestBodyDto,
+    @Body() createCustomerMetaField: CreateCustomerMetaFieldBodyRequestDto,
     @CustomerJwtToken() { customerId }: CustomerJwtRequestDto,
   ) {
     return customerId;

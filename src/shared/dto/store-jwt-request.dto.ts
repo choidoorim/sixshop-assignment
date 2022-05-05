@@ -7,6 +7,10 @@ export class StoreJwtRequestDto {
 
   @IsNotEmpty()
   @IsString()
+  readonly role: string;
+
+  @IsNotEmpty()
+  @IsString()
   readonly iat: number;
 
   @IsNotEmpty()
