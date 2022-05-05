@@ -29,6 +29,14 @@ model Store {
   ProductCustomFields   ProductCustomFields[]
   Order                 Order[]
   OrderCustomFields     OrderCustomFields[]
+  storeToken            StoreToken?
+}
+
+model StoreToken {
+  id                    String          @id @default(uuid())
+  store                 String
+  Store                 Store           @relation(fields: [store], references: [id])
+  token                 String
 }
 
 model Customer {
