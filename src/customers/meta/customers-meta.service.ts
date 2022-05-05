@@ -12,11 +12,12 @@ export class CustomersMetaService {
     private readonly customersMetaRepository: CustomersMetaRepository,
   ) {}
 
-  createCustomerMeta = (
+  createCustomerMeta = async (
     createCustomerMetaField: CreateCustomerMetaFieldBodyRequestDto,
     store: string,
   ) => {
     const payload = { ...createCustomerMetaField, store };
-    return payload;
+    await this.customersMetaRepository.createMeta(this.prismaService, payload);
+    return null;
   };
 }

@@ -1,2 +1,2 @@
 export * from './bcrypt';
-export * from './customer.decorator';
+export * from './jwt-token.decorator';

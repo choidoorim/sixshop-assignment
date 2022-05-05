@@ -11,7 +11,7 @@ import { ILoginStoreRequest } from './type';
 import { LoginStoreResponseDto } from './dto/login-store-response.dto';
 import { JwtStoreAuth } from '@app/utils/guard';
 import { StoreJwtRequestDto } from '@api/shared/dto';
-import { StoreJwtToken } from '@app/utils/store.decorator';
+import { JwtToken } from '@app/utils/jwt-token.decorator';
 
 @Controller()
 export class AuthStoresController {
@@ -31,7 +31,7 @@ export class AuthStoresController {
 
   @JwtStoreAuth()
   @Get('test')
-  test(@StoreJwtToken() { store }: StoreJwtRequestDto) {
+  test(@JwtToken() { store }: StoreJwtRequestDto) {
     return { store };
   }
 }

@@ -5,10 +5,10 @@ import {
 import { Body } from '@nestjs/common';
 
 import { StoreJwtRequestDto } from '@api/shared/dto';
+import { JwtToken } from '@app/utils/jwt-token.decorator';
 
 import { CustomersMetaService } from './customers-meta.service';
 import { CreateCustomerMetaFieldBodyRequestDto } from './dto';
-import { StoreJwtToken } from '@app/utils/store.decorator';
 
 @Controller()
 export class CustomersMetaController {
@@ -17,7 +17,7 @@ export class CustomersMetaController {
   @CreateMetaField()
   createMetaField(
     @Body() createCustomerMetaField: CreateCustomerMetaFieldBodyRequestDto,
-    @StoreJwtToken() { store }: StoreJwtRequestDto,
+    @JwtToken() { store }: StoreJwtRequestDto,
   ) {
     return this.customersMetaService.createCustomerMeta(
       createCustomerMetaField,
