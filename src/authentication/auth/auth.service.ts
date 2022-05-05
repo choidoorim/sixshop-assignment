@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { isMatch } from '@app/utils';
 
 import { StoresService } from '../../stores/stores.service';
+import { CreateAdminRequestDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,12 @@ export class AuthService {
       const { password, ...rest } = store;
       return rest;
     }
+    return null;
+  };
+
+  createAdmin = async (createAdminRequestDto: CreateAdminRequestDto) => {
+    await this.storesService.createAdmin(createAdminRequestDto);
+
     return null;
   };
 

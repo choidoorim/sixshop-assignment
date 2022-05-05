@@ -16,11 +16,20 @@ enum MetaType {
   STRING
 }
 
-model Store {
+model Admin {
   id                    String          @id @default(uuid())
   email                 String          @unique
   password              String
   name                  String
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  store                 Store?
+}
+
+model Store {
+  id                    String          @id @default(uuid())
+  adminId               String
+  admin                 Admin           @relation(fields: [adminId], references: [id])
   createdAt             DateTime        @default(now())
   updatedAt             DateTime        @updatedAt
   Customer              Customer[]
@@ -29,14 +38,6 @@ model Store {
   ProductCustomFields   ProductCustomFields[]
   Order                 Order[]
   OrderCustomFields     OrderCustomFields[]
-  storeToken            StoreToken?
-}
-
-model StoreToken {
-  id                    String          @id @default(uuid())
-  store                 String
-  Store                 Store           @relation(fields: [store], references: [id])
-  token                 String
 }
 
 model Customer {
