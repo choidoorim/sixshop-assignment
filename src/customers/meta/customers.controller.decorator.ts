@@ -4,7 +4,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtStoreAuth } from '@app/utils/guard';
 import { ApiDoc } from '@app/config/decorator';
 
-import { CreateCustomerMetaFieldBodyRequestDto } from './dto';
+import {
+  CreateCustomerMetaFieldBodyRequestDto,
+  GetCustomerMetaResponseDto,
+} from './dto';
 
 export const CustomerMetaController = () =>
   applyDecorators(Controller({ path: 'customer' }), ApiTags('customer-meta'));
@@ -25,10 +28,13 @@ export const CreateMetaField = () =>
 
 export const GetCustomerMetaField = () =>
   applyDecorators(
-    Get('meta'),
+    Get('/meta'),
     JwtStoreAuth(),
     ApiDoc({
       summary: '상점 - 고객 커스텀 필드 조회 API',
-      okRes: {},
+      okRes: {
+        description: '상점 - 고객 커스텀 필드 조회 API',
+        type: GetCustomerMetaResponseDto,
+      },
     }),
   );
