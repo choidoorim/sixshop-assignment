@@ -1,4 +1,4 @@
-import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { JwtStoreAuth } from '@app/utils/guard';
@@ -20,5 +20,15 @@ export const CreateMetaField = () =>
         schema: {},
       },
       bodyOptions: { type: CreateCustomerMetaFieldBodyRequestDto },
+    }),
+  );
+
+export const GetCustomerMetaField = () =>
+  applyDecorators(
+    Get('meta'),
+    JwtStoreAuth(),
+    ApiDoc({
+      summary: '상점 - 고객 커스텀 필드 조회 API',
+      okRes: {},
     }),
   );
