@@ -9,8 +9,8 @@ import { CreateAdminRequestDto } from './dto';
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly jwtService: JwtService,
     private readonly adminService: AdminService,
-    private jwtService: JwtService,
   ) {}
 
   validateStore = async (email: string, password: string) => {

@@ -14,6 +14,8 @@
 
 ### 한번 발급 받은 Store Token 은 재발급할 수 없다. 왜냐하면 Store 테이블의 id 이기 때문이다.
 
+### Store Id 는 Token 으로 암호화 한 뒤에 저장한 뒤에 해당 Token 을 strategy, guard 를 통해서 매번 체크할 수 잇도록 한다. 
+
 생성되는 Store ID 를 기존 Clayful 의 토큰?이라고 생각하면 될 것 같다.
 메타 필드를 체크할 때 필수 값들을 확인 후, 그에 맞는 type 을 체크해줘야 한다.
 

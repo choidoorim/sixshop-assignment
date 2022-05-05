@@ -3,6 +3,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Admin } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
@@ -16,6 +17,7 @@ import { StoresRepository } from './stores.repository';
 @Injectable()
 export class AdminService {
   constructor(
+    private readonly jwtService: JwtService,
     private readonly prismaService: PrismaService,
     private readonly adminRepository: AdminRepository,
     private readonly storesRepository: StoresRepository,
@@ -42,8 +44,10 @@ export class AdminService {
           prisma,
           payload,
         );
+        // TODO: id 를 token 으로 암호화해서 저장하기
+        const storeId = this.jwtService.sign({ adminId });
 
-        await this.storesRepository.createStore(prisma, adminId);
+        await this.storesRepository.createStore(prisma, storeId, adminId);
       });
 
       return null;
