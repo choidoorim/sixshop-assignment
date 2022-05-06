@@ -15,6 +15,8 @@ export const GetStoreToken = () =>
     JwtAdminAuth(),
     ApiDoc({
       summary: '상점 Token 조회 API',
+      description:
+        '상점 Token 을 이용해서 기본적인 고객, 상점, 주문 기능을 사용할 수 있도록 했다',
       okRes: {
         type: GetStoreTokenResponseDto,
       },

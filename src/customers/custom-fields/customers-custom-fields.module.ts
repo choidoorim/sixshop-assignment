@@ -2,10 +2,22 @@ import { Module } from '@nestjs/common';
 
 import { CustomersCustomFieldsController } from './customers-custom-fields.controller';
 import { CustomersCustomFieldsService } from './customers-custom-fields.service';
-import { CustomersCustomFieldsRepository } from './customers-custom-fields.repository';
+import {
+  CustomersCustomFieldsRepository,
+  CustomersCustomFieldsDataRepository,
+} from './repository';
 
 @Module({
   controllers: [CustomersCustomFieldsController],
-  providers: [CustomersCustomFieldsService, CustomersCustomFieldsRepository],
+  providers: [
+    CustomersCustomFieldsService,
+    CustomersCustomFieldsRepository,
+    CustomersCustomFieldsDataRepository,
+  ],
+  exports: [
+    CustomersCustomFieldsService,
+    CustomersCustomFieldsRepository,
+    CustomersCustomFieldsDataRepository,
+  ],
 })
 export class CustomersCustomFieldsModule {}
