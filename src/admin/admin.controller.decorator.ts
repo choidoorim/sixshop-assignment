@@ -4,19 +4,19 @@ import { ApiTags } from '@nestjs/swagger';
 import { ApiDoc } from '@app/config/decorator';
 import { JwtAdminAuth } from '@app/utils/guard';
 
-import { GetStoreIdResponseDto } from './dto';
+import { GetStoreTokenResponseDto } from './dto';
 
 export const AdminController = () =>
-  applyDecorators(Controller({ path: 'admin' }), ApiTags('store'));
+  applyDecorators(Controller({ path: 'admin' }), ApiTags('admin'));
 
-export const GetStoreId = () =>
+export const GetStoreToken = () =>
   applyDecorators(
-    Get('store'),
+    Get('/store/token'),
     JwtAdminAuth(),
     ApiDoc({
-      summary: '상점 ID 조회 API',
+      summary: '상점 Token 조회 API',
       okRes: {
-        type: GetStoreIdResponseDto,
+        type: GetStoreTokenResponseDto,
       },
     }),
   );

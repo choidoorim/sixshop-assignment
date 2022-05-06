@@ -60,4 +60,13 @@ export class AdminService {
 
   getStore = (adminId: string) =>
     this.storesRepository.getStore(this.prismaService, adminId);
+
+  getStoreToken = async (adminId: string) => {
+    const { token } = await this.storesRepository.getStore(
+      this.prismaService,
+      adminId,
+    );
+
+    return token;
+  };
 }
