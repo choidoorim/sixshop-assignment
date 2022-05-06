@@ -20,14 +20,11 @@
 메타 필드를 체크할 때 필수 값들을 확인 후, 그에 맞는 type 을 체크해줘야 한다.
 
 ## Customers-meta
-### 1. 회원가입 - /auth/stores/register
-- 중복되는 회원가입일 경우 403 error 를 통해 로그인을 진행하도록 한다.
-- 비밀번호는 bcrypt 를 이용한 단방향 암호화를 사용한다.
-- 고객의 store 는 고객 아이디와 동일하게 uuid 로 자동 생성된다.
-- auth 에 회원가입이 있는 이유는 회원가입 또한 서비스를 이용하기 위한 인증단계라고 생각했다.
+### 1. 회원가입 - /auth/register
 
-### 2. 로그인 - /auth/stores/login
-- 로그인 시 JWT 토큰을 발행한다.
+### 2. 로그인 - /auth/login
+- 로그인 시 admin 에서 사용할 수 있는 JWT 토큰을 발행한다.
+- Jwt 토큰에는 해당 store id key 값도 같이 포함시킨다.
 
 ## 3. 고객 메타 필드 생성 - /customers/meta
 1. 현재 존재하는 상점인지 체크한다

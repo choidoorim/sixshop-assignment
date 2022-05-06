@@ -8,7 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Injectable()
-export class JwtStoreAuthGuard extends AuthGuard('jwt-store') {
+export class JwtTokenAuthGuard extends AuthGuard('jwt-token') {
   handleRequest<TUser>(err: Error, user: TUser, info: Error) {
     if (err || info || !user) {
       throw err || new UnauthorizedException(info.message);
@@ -17,5 +17,5 @@ export class JwtStoreAuthGuard extends AuthGuard('jwt-store') {
   }
 }
 
-export const JwtStoreAuth = () =>
-  applyDecorators(UseGuards(JwtStoreAuthGuard), ApiBearerAuth());
+export const JwtTokenAuth = () =>
+  applyDecorators(UseGuards(JwtTokenAuthGuard), ApiBearerAuth());

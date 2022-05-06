@@ -13,7 +13,7 @@ export class AuthService {
     private readonly adminService: AdminService,
   ) {}
 
-  validateStore = async (email: string, password: string) => {
+  validateAdmin = async (email: string, password: string) => {
     const admin = await this.adminService.findAdminByEmail(email);
     if (admin && (await isMatch(admin.password, password))) {
       const { password, ...rest } = admin;
@@ -28,8 +28,10 @@ export class AuthService {
     return null;
   };
 
-  login = (adminId: string) => {
-    const payload = { adminId };
+  login = async (adminId: string) => {
+    const { id } = await this.adminService.getStore(adminId);
+    const payload = { adminId, store: id };
+
     return this.jwtService.sign(payload);
   };
 }

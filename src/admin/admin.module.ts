@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
-import { AdminRepository } from './admin.repository';
-import { StoresRepository } from './stores.repository';
-import { JwtStoreStrategy } from './jwt-store.strategy';
+import { AdminRepository, StoresRepository } from './repository';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -18,12 +16,7 @@ import { JwtStoreStrategy } from './jwt-store.strategy';
     }),
   ],
   controllers: [AdminController],
-  providers: [
-    AdminService,
-    AdminRepository,
-    StoresRepository,
-    JwtStoreStrategy,
-  ],
-  exports: [AdminService, AdminRepository],
+  providers: [AdminService, AdminRepository, StoresRepository],
+  exports: [AdminService, AdminRepository, StoresRepository],
 })
 export class AdminModule {}

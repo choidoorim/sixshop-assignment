@@ -19,9 +19,9 @@ export class AuthController {
   }
 
   @LoginAdmin()
-  loginAdmin(@Req() { user }: { user: IAdminInterface }) {
+  async loginAdmin(@Req() { user }: { user: IAdminInterface }) {
     return new LoginAdminResponseDto({
-      accessToken: this.authService.login(user.adminId),
+      accessToken: await this.authService.login(user.adminId),
     });
   }
 }

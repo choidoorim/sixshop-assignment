@@ -31,6 +31,7 @@ model Store {
   id                    String          @id @default(uuid())
   adminId               String
   admin                 Admin           @relation(fields: [adminId], references: [id])
+  token                 String?
   createdAt             DateTime        @default(now())
   updatedAt             DateTime        @updatedAt
   Customer              Customer[]
