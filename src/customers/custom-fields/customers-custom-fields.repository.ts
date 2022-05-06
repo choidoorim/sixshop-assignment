@@ -8,9 +8,18 @@ export class CustomersCustomFieldsRepository {
   createCustomFields = (
     prismaConnection: PrismaConnection,
     data: Prisma.CustomerCustomFieldsCreateManyInput,
-  ): Promise<CustomerCustomFields> => {
-    return prismaConnection.customerCustomFields.create({
+  ): Promise<CustomerCustomFields> =>
+    prismaConnection.customerCustomFields.create({
       data,
     });
-  };
+
+  getCustomFields = (
+    prismaConnection: PrismaConnection,
+    store: string,
+  ): Promise<CustomerCustomFields[]> =>
+    prismaConnection.customerCustomFields.findMany({
+      where: {
+        store,
+      },
+    });
 }

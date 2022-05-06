@@ -1,9 +1,12 @@
-import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAdminAuth } from '@app/utils/guard';
 import { ApiDoc } from '@app/config/decorator';
 
-import { CreateCustomersCustomFieldsRequestDto } from './dto';
+import {
+  CreateCustomersCustomFieldsRequestDto,
+  GetCustomersCustomFieldsResponseDto,
+} from './dto';
 
 export const CustomersCustomFieldsController = () =>
   applyDecorators(
@@ -22,5 +25,17 @@ export const CreateCustomerCustomField = () =>
         schema: {},
       },
       bodyOptions: { type: CreateCustomersCustomFieldsRequestDto },
+    }),
+  );
+
+export const GetCustomerCustomFields = () =>
+  applyDecorators(
+    Get(),
+    JwtAdminAuth(),
+    ApiDoc({
+      summary: '고객 커스텀 필드 조회 API',
+      okRes: {
+        type: GetCustomersCustomFieldsResponseDto,
+      },
     }),
   );

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import * as _ from 'lodash';
 
 import { PrismaService } from '@app/prisma';
 
@@ -23,5 +24,14 @@ export class CustomersCustomFieldsService {
     );
 
     return null;
+  };
+
+  getCustomFields = async (store: string) => {
+    const result = await this.customersCustomFieldsRepository.getCustomFields(
+      this.prismaService,
+      store,
+    );
+
+    return _.isEmpty(result) ? null : result;
   };
 }
