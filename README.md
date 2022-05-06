@@ -21,20 +21,26 @@
 생성되는 Store ID 를 기존 Clayful 의 토큰?이라고 생각하면 될 것 같다.
 메타 필드를 체크할 때 필수 값들을 확인 후, 그에 맞는 type 을 체크해줘야 한다.
 
-## Customers-meta
-### 1. 회원가입 - /auth/register
+## Admin
+### 1. 회원가입 - /auth/register O
+- 회원가입 시에 기간이 없는 store token 을 발급한다. 해당 토큰에는 store id 값이 들어가 있다.
+- Store 테이블에 들어가 있는 token 컬럼의 값들에는 store id 값이 들어가 있다.
 
-### 2. 로그인 - /auth/login
+### 2. 로그인 - /auth/login O
 - 로그인 시 admin 에서 사용할 수 있는 JWT 토큰을 발행한다.
-- Jwt 토큰에는 해당 store id key 값도 같이 포함시킨다.
+- Jwt 토큰에는 admin id 와 store id 를 함께 추가해서 암호화 한다.
 
-## 3. 고객 메타 필드 생성 - /customers/meta
+### 3. 상점 Token 조회 API O
+- 개인의 상점에서 고객, 상품, 주문 기능을 사용하기 위한 Token 이 존재하는데 이 Token 을 조회하는 기능이다.
+
+## Customers-meta
+## 1. 고객 메타 필드 생성 - /customers/custom-fields
 1. 현재 존재하는 상점인지 체크한다
-2. 커스텀 필드의 수정은 기존에 추가한 필드의 목적을 잃기 때문에 안되는 것으로 생각했다.
+2. 커스텀 필드의 key 이름의 수정은 기존에 추가한 필드의 목적을 잃기 때문에 안되는 것으로 생각했다.
 
-## 4. 고객 커스텀 필드 삭제 - /customers/meta
+## 2. 고객 커스텀 필드 삭제 - /customers/custom-fields
 1. 고객 커스텀 필드 삭제 시, 그와 관련된 모든 데이터들을 같이 삭제해줘야 할까?
 
 ## Customers
-### 1. 로그인
-1. 로그인 시 JWT 토큰에 store id 를 같이 넣어준다.
+### 1. 회원가입 - /customers
+1. 특정 상점에 고객이 회원가입을 할 때는 해당 상점에 추가해야 될 커스텀 필드가 있는지 validation 을 진행한 뒤 생성한다.
