@@ -12,6 +12,7 @@ import { CreateCustomerRequestDto, CustomFields } from './dto';
 import { CustomersCustomFieldsService } from './custom-fields/customers-custom-fields.service';
 import { CustomersCustomFieldsDataRepository } from './custom-fields/repository';
 import { TCreateCustomerCustomFieldsData } from './type';
+import { generateHash } from '@app/utils';
 
 @Injectable()
 export class CustomersService {
@@ -81,7 +82,7 @@ export class CustomersService {
     }));
 
   createCustomer = async (
-    { customFields, ...customerDto }: CreateCustomerRequestDto,
+    { customFields, password, ...customerDto }: CreateCustomerRequestDto,
     store: string,
   ) => {
     const customerCustomFields: CustomerCustomFields[] | null =
@@ -89,7 +90,11 @@ export class CustomersService {
 
     await this.validateCustomFields(customerCustomFields, customFields);
 
-    const customerData = { store, ...customerDto };
+    const customerData = {
+      store,
+      password: await generateHash(password),
+      ...customerDto,
+    };
 
     try {
       await this.prismaService.$transaction(async (prisma) => {

@@ -8,9 +8,8 @@ export class CustomersRepository {
   createCustomer = (
     prismaConnection: PrismaConnection,
     data: Prisma.CustomerCreateManyInput,
-  ) => {
-    return prismaConnection.customer.create({
+  ) =>
+    prismaConnection.customer.create({
       data,
     });
-  };
 }
