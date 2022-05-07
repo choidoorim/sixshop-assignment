@@ -26,11 +26,10 @@ export class CustomersCustomFieldsRepository {
   getCustomFieldsByIds = (
     prismaConnection: PrismaConnection,
     customFieldIds: string[],
-  ): Promise<CustomerCustomFields[]> => {
-    return prismaConnection.customerCustomFields.findMany({
+  ): Promise<CustomerCustomFields[]> =>
+    prismaConnection.customerCustomFields.findMany({
       where: {
         id: { in: customFieldIds },
       },
     });
-  };
 }

@@ -3,8 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtTokenAuth } from '@app/utils/guard/jwt-token-auth.guard';
 import { ApiDoc } from '@app/config/decorator';
 
-import { CreateCustomerRequestDto } from './dto';
-import { GetCustomerResponseDto } from './dto/get-customer-response.dto';
+import { CreateCustomerRequestDto, GetCustomerResponseDto } from './dto';
 
 export const CustomersController = () =>
   applyDecorators(Controller({ path: 'customers' }), ApiTags('customers'));

@@ -197,7 +197,7 @@ export class CustomersService {
     } = customer;
 
     if (store !== customerStore) {
-      throw new ForbiddenException('고객의 상점이 다릅니다');
+      throw new ForbiddenException('고객의 상점 ID가 다릅니다');
     }
 
     return {

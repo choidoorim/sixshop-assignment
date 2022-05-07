@@ -10,8 +10,7 @@ import {
 } from './customers.controller.decorator';
 import { CustomersService } from './customers.service';
 import { CreateCustomerRequestDto } from './dto';
-import { GetCustomerRequestDto } from './dto/get-customer-request.dto';
-import { GetCustomerResponseDto } from "./dto/get-customer-response.dto";
+import { GetCustomerRequestDto, GetCustomerResponseDto } from './dto';
 
 @Controller()
 export class CustomersController {
