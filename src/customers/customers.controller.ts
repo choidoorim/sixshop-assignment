@@ -11,6 +11,7 @@ import {
 import { CustomersService } from './customers.service';
 import { CreateCustomerRequestDto } from './dto';
 import { GetCustomerRequestDto } from './dto/get-customer-request.dto';
+import { GetCustomerResponseDto } from "./dto/get-customer-response.dto";
 
 @Controller()
 export class CustomersController {
@@ -28,10 +29,14 @@ export class CustomersController {
   }
 
   @GetCustomer()
-  getCustomer(
+  async getCustomer(
     @JwtToken() { store }: StoreJwtRequestDto,
     @Param() getCustomerRequestDto: GetCustomerRequestDto,
   ) {
-    return this.customersService.getCustomer(getCustomerRequestDto);
+    const result = await this.customersService.getCustomer(
+      getCustomerRequestDto,
+      store,
+    );
+    return new GetCustomerResponseDto(result);
   }
 }

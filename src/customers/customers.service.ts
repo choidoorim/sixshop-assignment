@@ -1,10 +1,12 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { CustomerCustomFields, CustomerCustomFieldsData } from '@prisma/client';
+import * as _ from 'lodash';
 
 import { PrismaService } from '@app/prisma';
 
@@ -21,6 +23,7 @@ import {
 } from './custom-fields/repository';
 import { TCreateCustomerCustomFieldsData } from './type';
 import { generateHash } from '@app/utils';
+import { GetCustomerResponseDto } from './dto/get-customer-response.dto';
 
 @Injectable()
 export class CustomersService {
@@ -140,7 +143,42 @@ export class CustomersService {
       ({ customFieldsId }: CustomerCustomFieldsData) => customFieldsId,
     );
 
-  getCustomer = async ({ customerId }: GetCustomerRequestDto) => {
+  private getCustomFields = async (
+    customerCustomFieldsData: CustomerCustomFieldsData[],
+  ) => {
+    // 설정된 커스텀 필드가 없을 경우
+    if (_.isEmpty(customerCustomFieldsData)) {
+      return null;
+    }
+
+    const customFieldIds = this.getCustomFieldIds(customerCustomFieldsData);
+
+    // 1. customFieldsId 에 해당하는 CustomerCustomFields Table 의 key 값들을 찾아준다.
+    const customFields: CustomerCustomFields[] =
+      await this.customersCustomFieldsRepository.getCustomFieldsByIds(
+        this.prismaService,
+        customFieldIds,
+      );
+
+    // 2. 기존 CustomerCustomFieldsData 와 CustomerCustomFields 의 customFieldsId 와 id 가 같은 값들을 매칭해서 key-value 를 찾아준다.
+    return customerCustomFieldsData.map(
+      ({ id, customFieldsId, value }: CustomerCustomFieldsData) => {
+        const { key } = customFields.find(
+          ({ id }: CustomerCustomFields) => customFieldsId === id,
+        );
+        return {
+          customFieldsDataId: id,
+          key,
+          value,
+        };
+      },
+    );
+  };
+
+  getCustomer = async (
+    { customerId }: GetCustomerRequestDto,
+    store: string,
+  ): Promise<GetCustomerResponseDto> => {
     const customer = await this.customersRepository.getCustomer(
       this.prismaService,
       customerId,
@@ -150,16 +188,23 @@ export class CustomersService {
       throw new NotFoundException();
     }
 
-    // const customFieldIds = this.getCustomFieldIds(
-    //   customer.CustomerCustomFieldsData,
-    // );
-    //
-    // const customFields =
-    //   await this.customersCustomFieldsRepository.getCustomFieldsByIds(
-    //     this.prismaService,
-    //     customFieldIds,
-    //   );
+    const {
+      id,
+      email,
+      name,
+      store: customerStore,
+      CustomerCustomFieldsData: customerCustomFieldsData,
+    } = customer;
 
-    return customer;
+    if (store !== customerStore) {
+      throw new ForbiddenException('고객의 상점이 다릅니다');
+    }
+
+    return {
+      id,
+      email,
+      name,
+      customFields: await this.getCustomFields(customerCustomFieldsData),
+    };
   };
 }
