@@ -44,3 +44,6 @@
 ## Customers
 ### 1. 회원가입 - /customers
 1. 특정 상점에 고객이 회원가입을 할 때는 해당 상점에 추가해야 될 커스텀 필드가 있는지 validation 을 진행한 뒤 생성한다.
+
+### 2. 회원정보 조회 - /customers/:customerId
+1. 기본적인 사용자의 정보와 custom field Data 가 있을 경우 그것도 같이 보여줘야 한다.

@@ -12,4 +12,14 @@ export class CustomersRepository {
     prismaConnection.customer.create({
       data,
     });
+
+  getCustomer = (prismaConnection: PrismaConnection, customerId: string) =>
+    prismaConnection.customer.findFirst({
+      where: {
+        id: customerId,
+      },
+      include: {
+        CustomerCustomFieldsData: true,
+      },
+    });
 }

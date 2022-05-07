@@ -1,4 +1,4 @@
-import { applyDecorators, Controller, Post } from '@nestjs/common';
+import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtTokenAuth } from '@app/utils/guard/jwt-token-auth.guard';
 import { ApiDoc } from '@app/config/decorator';
@@ -18,5 +18,14 @@ export const CreateCustomer = () =>
         schema: {},
       },
       bodyOptions: { type: CreateCustomerRequestDto },
+    }),
+  );
+
+export const GetCustomer = () =>
+  applyDecorators(
+    Get('/:customerId'),
+    JwtTokenAuth(),
+    ApiDoc({
+      summary: '고객 정보 조회 API',
     }),
   );

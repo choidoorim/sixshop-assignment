@@ -8,7 +8,11 @@ import { CustomerCustomFields } from '@prisma/client';
 import { PrismaService } from '@app/prisma';
 
 import { CustomersRepository } from './customers.repository';
-import { CreateCustomerRequestDto, CustomFields } from './dto';
+import {
+  CreateCustomerRequestDto,
+  CustomFields,
+  GetCustomerRequestDto,
+} from './dto';
 import { CustomersCustomFieldsService } from './custom-fields/customers-custom-fields.service';
 import { CustomersCustomFieldsDataRepository } from './custom-fields/repository';
 import { TCreateCustomerCustomFieldsData } from './type';
@@ -113,5 +117,9 @@ export class CustomersService {
     }
 
     return null;
+  };
+
+  getCustomer = ({ customerId }: GetCustomerRequestDto) => {
+    return this.customersRepository.getCustomer(this.prismaService, customerId);
   };
 }
