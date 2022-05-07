@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Customer, CustomerCustomFieldsData } from '@prisma/client';
 
 import { PrismaConnection } from '@app/prisma/type';
+
+import { TCustomerWithCustomFields } from './type';
 
 @Injectable()
 export class CustomersRepository {
@@ -13,7 +15,10 @@ export class CustomersRepository {
       data,
     });
 
-  getCustomer = (prismaConnection: PrismaConnection, customerId: string) =>
+  getCustomer = (
+    prismaConnection: PrismaConnection,
+    customerId: string,
+  ): Promise<TCustomerWithCustomFields | null> =>
     prismaConnection.customer.findFirst({
       where: {
         id: customerId,

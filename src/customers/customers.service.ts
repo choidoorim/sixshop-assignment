@@ -2,8 +2,9 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
-import { CustomerCustomFields } from '@prisma/client';
+import { CustomerCustomFields, CustomerCustomFieldsData } from '@prisma/client';
 
 import { PrismaService } from '@app/prisma';
 
@@ -14,7 +15,10 @@ import {
   GetCustomerRequestDto,
 } from './dto';
 import { CustomersCustomFieldsService } from './custom-fields/customers-custom-fields.service';
-import { CustomersCustomFieldsDataRepository } from './custom-fields/repository';
+import {
+  CustomersCustomFieldsDataRepository,
+  CustomersCustomFieldsRepository,
+} from './custom-fields/repository';
 import { TCreateCustomerCustomFieldsData } from './type';
 import { generateHash } from '@app/utils';
 
@@ -24,8 +28,18 @@ export class CustomersService {
     private readonly prismaService: PrismaService,
     private readonly customersRepository: CustomersRepository,
     private readonly customersCustomFieldsService: CustomersCustomFieldsService,
+    private readonly customersCustomFieldsRepository: CustomersCustomFieldsRepository,
     private readonly customersCustomFieldsDataRepository: CustomersCustomFieldsDataRepository,
   ) {}
+
+  private isExistedRequired = (
+    customerCustomFields: CustomerCustomFields[],
+  ): boolean => {
+    const result = customerCustomFields.find(
+      ({ required }: CustomerCustomFields) => required === true,
+    );
+    return !!result;
+  };
 
   // NOTE: customFields 의 데이터들이 customerCustomFields 에 속해있는 데이터가 맞는지 확인해야 한다.
   private validateCustomFields = (
@@ -37,8 +51,10 @@ export class CustomersService {
         '고객 커스텀 필드 데이터가 필요하지 않습니다',
       );
     }
-    if (customerCustomFields && !customFields) {
-      throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
+    if (!customFields) {
+      if (this.isExistedRequired(customerCustomFields)) {
+        throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
+      }
     }
 
     if (customerCustomFields && customFields) {
@@ -119,7 +135,31 @@ export class CustomersService {
     return null;
   };
 
-  getCustomer = ({ customerId }: GetCustomerRequestDto) => {
-    return this.customersRepository.getCustomer(this.prismaService, customerId);
+  private getCustomFieldIds = (customFieldsData: CustomerCustomFieldsData[]) =>
+    customFieldsData.map(
+      ({ customFieldsId }: CustomerCustomFieldsData) => customFieldsId,
+    );
+
+  getCustomer = async ({ customerId }: GetCustomerRequestDto) => {
+    const customer = await this.customersRepository.getCustomer(
+      this.prismaService,
+      customerId,
+    );
+
+    if (!customer) {
+      throw new NotFoundException();
+    }
+
+    // const customFieldIds = this.getCustomFieldIds(
+    //   customer.CustomerCustomFieldsData,
+    // );
+    //
+    // const customFields =
+    //   await this.customersCustomFieldsRepository.getCustomFieldsByIds(
+    //     this.prismaService,
+    //     customFieldIds,
+    //   );
+
+    return customer;
   };
 }
