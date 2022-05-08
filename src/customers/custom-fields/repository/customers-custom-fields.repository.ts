@@ -40,6 +40,7 @@ export class CustomersCustomFieldsRepository {
       },
     });
 
+  // cascade 설정으로 필드 삭제 시 관련된 데이터들이 전부 삭제 된다
   deleteCustomFields = (
     prismaConnection: PrismaConnection,
     customFieldId: string,

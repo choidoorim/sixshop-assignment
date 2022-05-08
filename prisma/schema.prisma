@@ -69,7 +69,7 @@ model CustomerCustomFieldsData {
   CustomerCustomFields  CustomerCustomFields    @relation(fields: [customFieldsId], references: [id], onDelete: Cascade)
   customerId            String
   Customer              Customer                @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  value                 String
+  value                 Json
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
 }
@@ -88,7 +88,6 @@ model ProductCustomFields {
   id                        String                      @id @default(uuid())
   type                      MetaType
   key                       String
-  value                     String?
   required                  Boolean
   store                     String
   Store                     Store                       @relation(fields: [store], references: [id])
@@ -97,11 +96,13 @@ model ProductCustomFields {
 
 model ProductCustomFieldsData {
   id                    String                  @id @default(uuid())
-  value                 String
   productCustomFieldId  String
   ProductCustomFields   ProductCustomFields     @relation(fields: [productCustomFieldId], references: [id], onDelete: Cascade)
   productId             String
   product               Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  value                 Json
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
 }
 
 model Order {
@@ -128,9 +129,11 @@ model OrderCustomFields {
 
 model OrderCustomFieldsData {
   id                        String              @id @default(uuid())
-  value                     String
   orderCustomFieldId        String
   OrderCustomFields         OrderCustomFields   @relation(fields: [orderCustomFieldId], references: [id], onDelete: Cascade)
   orderId                   String
   Order                     Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  value                     Json
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
 }

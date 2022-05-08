@@ -1,13 +1,18 @@
 import {
   BadRequestException,
-  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CustomerCustomFields, CustomerCustomFieldsData } from '@prisma/client';
+import {
+  CustomerCustomFields,
+  CustomerCustomFieldsData,
+  MetaType,
+} from '@prisma/client';
 import * as _ from 'lodash';
 
+import { generateHash } from '@app/utils';
+import { validateTokenStore } from '@api/shared';
 import { PrismaService } from '@app/prisma';
 
 import { CustomersRepository } from './customers.repository';
@@ -15,16 +20,13 @@ import {
   CreateCustomerRequestDto,
   CustomFields,
   GetCustomerRequestDto,
+  GetCustomerResponseDto,
 } from './dto';
 import { CustomersCustomFieldsService } from './custom-fields/customers-custom-fields.service';
 import {
   CustomersCustomFieldsDataRepository,
   CustomersCustomFieldsRepository,
 } from './custom-fields/repository';
-import { TCreateCustomerCustomFieldsData } from './type';
-import { generateHash } from '@app/utils';
-import { GetCustomerResponseDto } from './dto/get-customer-response.dto';
-import { validateTokenStore } from "@api/shared";
 
 @Injectable()
 export class CustomersService {
@@ -43,36 +45,6 @@ export class CustomersService {
       ({ required }: CustomerCustomFields) => required === true,
     );
     return !!result;
-  };
-
-  // NOTE: customFields 의 데이터들이 customerCustomFields 에 속해있는 데이터가 맞는지 확인해야 한다.
-  private validateCustomFields = (
-    customerCustomFields: CustomerCustomFields[] | null,
-    customFields?: CustomFields[],
-  ) => {
-    if (!customerCustomFields && customFields) {
-      throw new BadRequestException(
-        '고객 커스텀 필드 데이터가 필요하지 않습니다',
-      );
-    }
-    if (!customFields) {
-      if (this.isExistedRequired(customerCustomFields)) {
-        throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
-      }
-    }
-
-    if (customerCustomFields && customFields) {
-      this.validateRequiredFields(customerCustomFields, customFields);
-
-      customFields.forEach(({ customId }: CustomFields) => {
-        const isMatched = customerCustomFields.find(
-          ({ id }: CustomerCustomFields) => customId === id,
-        );
-        if (!isMatched) {
-          throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
-        }
-      });
-    }
   };
 
   //NOTE: 필수 필드 체크 로직
@@ -95,14 +67,60 @@ export class CustomersService {
     });
   };
 
+  private isRightType = (value: number | string | boolean, type: MetaType) => {
+    if (type === MetaType.INT && typeof value === 'number') {
+      return true;
+    }
+    if (type === MetaType.STRING && typeof value === 'string') {
+      return true;
+    }
+    return type === MetaType.BOOLEAN && typeof value === 'boolean';
+  };
+
+  // NOTE: customFields 의 데이터들이 customerCustomFields 에 속해있는 데이터가 맞는지 확인해야 한다.
+  // customFields 에 속한 id 와 customerCustomFields 에 존재하는 id 와 일치하는 데이터들로만 이루어져있는지 확인해야 한다.
+  private validateCustomFields = (
+    customerCustomFields: CustomerCustomFields[] | null,
+    customFields?: CustomFields[],
+  ) => {
+    if (!customerCustomFields && customFields) {
+      throw new BadRequestException(
+        '고객 커스텀 필드 데이터가 필요하지 않습니다',
+      );
+    }
+    if (!customFields) {
+      if (this.isExistedRequired(customerCustomFields)) {
+        throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
+      }
+    }
+
+    if (customerCustomFields && customFields) {
+      this.validateRequiredFields(customerCustomFields, customFields);
+
+      customFields.forEach(({ customId, value }: CustomFields) => {
+        const result = customerCustomFields.find(
+          ({ id }: CustomerCustomFields) => customId === id,
+        );
+        if (!result) {
+          throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
+        }
+        // NOTE: Type 체크
+        const { type } = result;
+        if (!this.isRightType(value, type)) {
+          throw new BadRequestException();
+        }
+      });
+    }
+  };
+
   private parseCustomFields = (
     customFields: CustomFields[],
     customerId: string,
-  ): TCreateCustomerCustomFieldsData[] =>
+  ) =>
     customFields.map(({ customId, value }: CustomFields) => ({
       customFieldsId: customId,
       customerId,
-      value,
+      value: { value },
     }));
 
   createCustomer = async (
@@ -111,6 +129,10 @@ export class CustomersService {
   ) => {
     const customerCustomFields: CustomerCustomFields[] | null =
       await this.customersCustomFieldsService.getCustomFields(store);
+
+    if (_.isEmpty(customerCustomFields)) {
+      throw new NotFoundException();
+    }
 
     await this.validateCustomFields(customerCustomFields, customFields);
 
@@ -163,7 +185,7 @@ export class CustomersService {
 
     // 2. 기존 CustomerCustomFieldsData 와 CustomerCustomFields 의 customFieldsId 와 id 가 같은 값들을 매칭해서 key-value 를 찾아준다.
     return customerCustomFieldsData.map(
-      ({ id, customFieldsId, value }: CustomerCustomFieldsData) => {
+      ({ id, customFieldsId, value: { value } }: CustomerCustomFieldsData) => {
         const { key } = customFields.find(
           ({ id }: CustomerCustomFields) => customFieldsId === id,
         );

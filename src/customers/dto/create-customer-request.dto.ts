@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -16,8 +17,7 @@ export class CustomFields {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  readonly value: string;
+  readonly value: number | string | boolean;
 }
 
 export class CreateCustomerRequestDto {
@@ -38,6 +38,7 @@ export class CreateCustomerRequestDto {
 
   @ApiProperty({ type: [CustomFields] })
   @IsOptional()
+  @IsArray()
   @Type(() => CustomFields)
   @ValidateNested({ each: true })
   readonly customFields?: CustomFields[];

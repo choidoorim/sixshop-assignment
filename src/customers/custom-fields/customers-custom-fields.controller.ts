@@ -15,11 +15,21 @@ import {
   DeleteCustomerCustomFieldsRequestDto,
 } from './dto';
 
+// NOTE: 타입을 한 번 설정하면 수정은 할 수 없도록 하였다.
 @Controller()
 export class CustomersCustomFieldsController {
   constructor(
     private readonly customersCustomFieldsService: CustomersCustomFieldsService,
   ) {}
+
+  @GetCustomerCustomFields()
+  async getCustomerCustomFields(@JwtToken() { store }: AdminJwtRequestDto) {
+    return new GetCustomersCustomFieldsResponseDto({
+      customFields: await this.customersCustomFieldsService.getCustomFields(
+        store,
+      ),
+    });
+  }
 
   @CreateCustomerCustomField()
   createCustomerCustomField(
@@ -31,15 +41,6 @@ export class CustomersCustomFieldsController {
       createCustomersCustomFieldsRequestDto,
       store,
     );
-  }
-
-  @GetCustomerCustomFields()
-  async getCustomerCustomFields(@JwtToken() { store }: AdminJwtRequestDto) {
-    return new GetCustomersCustomFieldsResponseDto({
-      customFields: await this.customersCustomFieldsService.getCustomFields(
-        store,
-      ),
-    });
   }
 
   @DeleteCustomerCustomFields()

@@ -10,8 +10,20 @@ import {
 
 export const CustomersCustomFieldsController = () =>
   applyDecorators(
-    Controller({ path: 'customers/custom-fields' }),
+    Controller({ path: 'customers/custom/fields' }),
     ApiTags('customers-custom'),
+  );
+
+export const GetCustomerCustomFields = () =>
+  applyDecorators(
+    Get(),
+    JwtAdminAuth(),
+    ApiDoc({
+      summary: '고객 커스텀 필드 조회 API',
+      okRes: {
+        type: GetCustomersCustomFieldsResponseDto,
+      },
+    }),
   );
 
 export const CreateCustomerCustomField = () =>
@@ -25,18 +37,6 @@ export const CreateCustomerCustomField = () =>
         schema: {},
       },
       bodyOptions: { type: CreateCustomersCustomFieldsRequestDto },
-    }),
-  );
-
-export const GetCustomerCustomFields = () =>
-  applyDecorators(
-    Get(),
-    JwtAdminAuth(),
-    ApiDoc({
-      summary: '고객 커스텀 필드 조회 API',
-      okRes: {
-        type: GetCustomersCustomFieldsResponseDto,
-      },
     }),
   );
 
