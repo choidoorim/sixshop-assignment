@@ -4,15 +4,15 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  CustomerCustomFields,
-  CustomerCustomFieldsData,
-  MetaType,
-} from '@prisma/client';
+import { CustomerCustomFields, CustomerCustomFieldsData } from '@prisma/client';
 import * as _ from 'lodash';
 
 import { generateHash } from '@app/utils';
-import { validateTokenStore } from '@api/shared';
+import {
+  getCustomFieldsValue,
+  isRightType,
+  validateTokenStore,
+} from '@api/shared';
 import { PrismaService } from '@app/prisma';
 
 import { CustomersRepository } from './customers.repository';
@@ -38,15 +38,6 @@ export class CustomersService {
     private readonly customersCustomFieldsDataRepository: CustomersCustomFieldsDataRepository,
   ) {}
 
-  private isExistedRequired = (
-    customerCustomFields: CustomerCustomFields[],
-  ): boolean => {
-    const result = customerCustomFields.find(
-      ({ required }: CustomerCustomFields) => required === true,
-    );
-    return !!result;
-  };
-
   //NOTE: 필수 필드 체크 로직
   private validateRequiredFields = (
     customerCustomFields: CustomerCustomFields[],
@@ -56,25 +47,26 @@ export class CustomersService {
       //NOTE: 필수인 커스텀필드가 있을 경우 해당 커스텀 필드 ID 가 존재하는지 체크한다
       //customerCustomFields 의 데이터들 중에 필수인 데이터들이 customFields 에 모두 있는지 확인해야 한다.
       if (required) {
-        const isExisted = customFields.find(
+        const isExisted = customFields.some(
           ({ customId }: CustomFields) => id === customId,
         );
 
         if (!isExisted) {
-          throw new BadRequestException('필수 커스텀 필드가 누락됐습니다');
+          throw new BadRequestException(
+            `필수 커스텀 필드 ID - ${id} 가 누락됐습니다`,
+          );
         }
       }
     });
   };
 
-  private isRightType = (value: number | string | boolean, type: MetaType) => {
-    if (type === MetaType.INT && typeof value === 'number') {
-      return true;
-    }
-    if (type === MetaType.STRING && typeof value === 'string') {
-      return true;
-    }
-    return type === MetaType.BOOLEAN && typeof value === 'boolean';
+  private isExistedRequired = (
+    customerCustomFields: CustomerCustomFields[],
+  ): boolean => {
+    const result = customerCustomFields.some(
+      ({ required }: CustomerCustomFields) => required === true,
+    );
+    return !!result;
   };
 
   // NOTE: customFields 의 데이터들이 customerCustomFields 에 속해있는 데이터가 맞는지 확인해야 한다.
@@ -88,6 +80,7 @@ export class CustomersService {
         '고객 커스텀 필드 데이터가 필요하지 않습니다',
       );
     }
+
     if (!customFields) {
       if (this.isExistedRequired(customerCustomFields)) {
         throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
@@ -106,7 +99,7 @@ export class CustomersService {
         }
         // NOTE: Type 체크
         const { type } = result;
-        if (!this.isRightType(value, type)) {
+        if (!isRightType(value, type)) {
           throw new BadRequestException();
         }
       });
@@ -185,14 +178,16 @@ export class CustomersService {
 
     // 2. 기존 CustomerCustomFieldsData 와 CustomerCustomFields 의 customFieldsId 와 id 가 같은 값들을 매칭해서 key-value 를 찾아준다.
     return customerCustomFieldsData.map(
-      ({ id, customFieldsId, value: { value } }: CustomerCustomFieldsData) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ({ id, customFieldsId, value }: CustomerCustomFieldsData) => {
         const { key } = customFields.find(
           ({ id }: CustomerCustomFields) => customFieldsId === id,
         );
         return {
           customFieldsDataId: id,
           key,
-          value,
+          value: getCustomFieldsValue(value),
         };
       },
     );
