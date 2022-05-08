@@ -32,4 +32,14 @@ export class CustomersCustomFieldsRepository {
         id: { in: customFieldIds },
       },
     });
+
+  deleteCustomFields = (
+    prismaConnection: PrismaConnection,
+    customFieldId: string,
+  ) =>
+    prismaConnection.customerCustomFields.delete({
+      where: {
+        id: customFieldId,
+      },
+    });
 }

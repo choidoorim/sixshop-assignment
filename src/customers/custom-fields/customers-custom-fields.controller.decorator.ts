@@ -1,4 +1,4 @@
-import { applyDecorators, Controller, Get, Post } from '@nestjs/common';
+import { applyDecorators, Controller, Delete, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAdminAuth } from '@app/utils/guard';
 import { ApiDoc } from '@app/config/decorator';
@@ -37,5 +37,15 @@ export const GetCustomerCustomFields = () =>
       okRes: {
         type: GetCustomersCustomFieldsResponseDto,
       },
+    }),
+  );
+
+export const DeleteCustomerCustomFields = () =>
+  applyDecorators(
+    Delete('/:customFieldId'),
+    JwtAdminAuth(),
+    ApiDoc({
+      summary: '고객 커스텀 필드 삭제 API',
+      description: '',
     }),
   );

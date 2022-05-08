@@ -12,4 +12,15 @@ export class CustomersCustomFieldsDataRepository {
     prismaConnection.customerCustomFieldsData.createMany({
       data,
     });
+
+  deleteCustomFieldData = (
+    prismaConnection: PrismaConnection,
+    customFieldsId: string,
+  ) => {
+    prismaConnection.customerCustomFieldsData.deleteMany({
+      where: {
+        customFieldsId,
+      },
+    });
+  };
 }

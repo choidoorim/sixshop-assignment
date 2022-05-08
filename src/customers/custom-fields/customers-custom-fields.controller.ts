@@ -5,12 +5,14 @@ import {
   CustomersCustomFieldsController as Controller,
   CreateCustomerCustomField,
   GetCustomerCustomFields,
+  DeleteCustomerCustomFields,
 } from './customers-custom-fields.controller.decorator';
 import { CustomersCustomFieldsService } from './customers-custom-fields.service';
-import { Body } from '@nestjs/common';
+import { Body, Param } from '@nestjs/common';
 import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
+  DeleteCustomerCustomFieldsRequestDto,
 } from './dto';
 
 @Controller()
@@ -38,5 +40,14 @@ export class CustomersCustomFieldsController {
         store,
       ),
     });
+  }
+
+  @DeleteCustomerCustomFields()
+  deleteCustomerCustomFields(
+    @Param()
+    deleteCustomerCustomFieldsRequestDto: DeleteCustomerCustomFieldsRequestDto,
+    @JwtToken() { store }: AdminJwtRequestDto,
+  ) {
+    return deleteCustomerCustomFieldsRequestDto;
   }
 }
