@@ -1,15 +1,15 @@
 import {
-  IsArray,
-  IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsString,
+  IsArray,
+  IsNumber,
+  IsOptional,
   ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
-export class CustomerCustomFields {
+export class ProductsCustomFields {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -20,26 +20,24 @@ export class CustomerCustomFields {
   readonly value: number | string | boolean;
 }
 
-export class CreateCustomerRequestDto {
-  @ApiProperty()
+export class CreateProductRequestDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
 
-  @ApiProperty()
   @IsNotEmpty()
-  @IsEmail()
-  readonly email: string;
+  @IsNumber()
+  readonly price: number;
 
-  @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  readonly password: string;
+  @IsArray()
+  @IsString({ each: true })
+  readonly categories: string[];
 
-  @ApiProperty({ type: [CustomerCustomFields] })
+  @ApiProperty({ type: [ProductsCustomFields] })
   @IsOptional()
   @IsArray()
-  @Type(() => CustomerCustomFields)
+  @Type(() => ProductsCustomFields)
   @ValidateNested({ each: true })
-  readonly customFields?: CustomerCustomFields[];
+  readonly customFields?: ProductsCustomFields[];
 }

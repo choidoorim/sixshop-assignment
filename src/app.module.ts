@@ -8,6 +8,7 @@ import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CustomersModule } from './customers/customers.module';
 import { ProductsModule } from './products/products.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ProductsModule } from './products/products.module';
     AuthenticationModule,
     CustomersModule,
     ProductsModule,
+    OrdersModule,
   ],
   providers: [
     {

@@ -47,5 +47,8 @@ export const DeleteCustomerCustomFields = () =>
     ApiDoc({
       summary: '고객 커스텀 필드 삭제 API',
       description: '',
+      createdRes: {
+        schema: {},
+      },
     }),
   );

@@ -18,7 +18,7 @@ import { PrismaService } from '@app/prisma';
 import { CustomersRepository } from './customers.repository';
 import {
   CreateCustomerRequestDto,
-  CustomFields,
+  CustomerCustomFields as CustomFields,
   GetCustomerRequestDto,
   GetCustomerResponseDto,
 } from './dto';

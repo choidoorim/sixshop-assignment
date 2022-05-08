@@ -8,7 +8,7 @@ export class GetCustomerCustomFields {
   readonly key: string;
 
   @ApiProperty()
-  readonly value: unknown;
+  readonly value: string | number | boolean;
 }
 
 export class GetCustomerResponseDto {
