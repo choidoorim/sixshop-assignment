@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, Product } from '@prisma/client';
 
 import { PrismaConnection } from '@app/prisma/type';
 
@@ -11,5 +11,15 @@ export class ProductsRepository {
   ) =>
     prismaConnection.product.create({
       data,
+    });
+
+  getProductsByIds = (
+    prismaConnection: PrismaConnection,
+    ids: string[],
+  ): Promise<Product[]> =>
+    prismaConnection.product.findMany({
+      where: {
+        id: { in: ids },
+      },
     });
 }

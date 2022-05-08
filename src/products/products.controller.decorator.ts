@@ -15,6 +15,9 @@ export const CreateProduct = () =>
     JwtTokenAuth(),
     ApiDoc({
       summary: '상품 생성 API',
+      createdRes: {
+        schema: {},
+      },
       bodyOptions: { type: CreateProductRequestDto },
     }),
   );

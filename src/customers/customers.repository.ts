@@ -15,16 +15,23 @@ export class CustomersRepository {
       data,
     });
 
-  getCustomer = (
+  getCustomerWithCustomFields = (
     prismaConnection: PrismaConnection,
     customerId: string,
   ): Promise<TCustomerWithCustomFields | null> =>
-    prismaConnection.customer.findFirst({
+    prismaConnection.customer.findUnique({
       where: {
         id: customerId,
       },
       include: {
         CustomerCustomFieldsData: true,
+      },
+    });
+
+  getCustomerById = (prismaConnection: PrismaConnection, customerId: string) =>
+    prismaConnection.customer.findUnique({
+      where: {
+        id: customerId,
       },
     });
 }

@@ -38,6 +38,17 @@ export class CustomersService {
     private readonly customersCustomFieldsDataRepository: CustomersCustomFieldsDataRepository,
   ) {}
 
+  validateCustomer = async (customerId: string) => {
+    const customer = await this.customersRepository.getCustomerById(
+      this.prismaService,
+      customerId,
+    );
+    console.log(customer);
+    if (!customer) {
+      throw new NotFoundException('존재하지 않는 고객입니다');
+    }
+  };
+
   //NOTE: 필수 필드 체크 로직
   private validateRequiredFields = (
     customerCustomFields: CustomerCustomFields[],
@@ -197,7 +208,7 @@ export class CustomersService {
     { customerId }: GetCustomerRequestDto,
     store: string,
   ): Promise<GetCustomerResponseDto> => {
-    const customer = await this.customersRepository.getCustomer(
+    const customer = await this.customersRepository.getCustomerWithCustomFields(
       this.prismaService,
       customerId,
     );

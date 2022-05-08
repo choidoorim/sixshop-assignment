@@ -9,5 +9,6 @@ import { CustomersRepository } from './customers.repository';
   imports: [CustomersCustomFieldsModule],
   controllers: [CustomersController],
   providers: [CustomersService, CustomersRepository],
+  exports: [CustomersService, CustomersRepository],
 })
 export class CustomersModule {}

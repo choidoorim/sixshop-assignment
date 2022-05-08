@@ -21,14 +21,17 @@ export class ProductsCustomFields {
 }
 
 export class CreateProductRequestDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly name: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   readonly price: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true })
