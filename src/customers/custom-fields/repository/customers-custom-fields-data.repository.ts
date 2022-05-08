@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CustomerCustomFieldsData, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 import { PrismaConnection } from '@app/prisma/type';
 

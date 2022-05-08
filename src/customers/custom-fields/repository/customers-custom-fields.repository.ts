@@ -23,6 +23,13 @@ export class CustomersCustomFieldsRepository {
       },
     });
 
+  getCustomFieldById = (prismaConnection: PrismaConnection, id: string) =>
+    prismaConnection.customerCustomFields.findUnique({
+      where: {
+        id,
+      },
+    });
+
   getCustomFieldsByIds = (
     prismaConnection: PrismaConnection,
     customFieldIds: string[],

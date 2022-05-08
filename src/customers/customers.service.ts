@@ -24,6 +24,7 @@ import {
 import { TCreateCustomerCustomFieldsData } from './type';
 import { generateHash } from '@app/utils';
 import { GetCustomerResponseDto } from './dto/get-customer-response.dto';
+import { validateTokenStore } from "@api/shared";
 
 @Injectable()
 export class CustomersService {
@@ -196,9 +197,7 @@ export class CustomersService {
       CustomerCustomFieldsData: customerCustomFieldsData,
     } = customer;
 
-    if (store !== customerStore) {
-      throw new ForbiddenException('고객의 상점 ID가 다릅니다');
-    }
+    validateTokenStore(store, customerStore);
 
     return {
       id,

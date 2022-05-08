@@ -48,6 +48,9 @@ export class CustomersCustomFieldsController {
     deleteCustomerCustomFieldsRequestDto: DeleteCustomerCustomFieldsRequestDto,
     @JwtToken() { store }: AdminJwtRequestDto,
   ) {
-    return deleteCustomerCustomFieldsRequestDto;
+    return this.customersCustomFieldsService.deleteCustomField(
+      deleteCustomerCustomFieldsRequestDto,
+      store,
+    );
   }
 }
