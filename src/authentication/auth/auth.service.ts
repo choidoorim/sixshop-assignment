@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { BcryptService } from '@app/utils/bcrypt';
@@ -16,7 +16,10 @@ export class AuthService {
 
   validateAdmin = async (email: string, password: string) => {
     const admin = await this.adminService.findAdminByEmail(email);
-    if (admin && (await this.bcryptService.isMatch(admin.password, password))) {
+    if (!admin) {
+      throw new NotFoundException('존재하지 않는 회원입니다');
+    }
+    if (await this.bcryptService.isMatch(admin.password, password)) {
       const { password, ...rest } = admin;
       return rest;
     }

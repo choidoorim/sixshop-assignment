@@ -1,7 +1,7 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
 } from '@nestjs/common';
 import { Admin } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
@@ -29,7 +29,7 @@ export class AdminService {
     );
 
     if (result) {
-      throw new NotFoundException();
+      throw new ConflictException('이미 가입 된 회원입니다');
     }
   };
 

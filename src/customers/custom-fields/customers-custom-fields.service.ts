@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -27,10 +28,26 @@ export class CustomersCustomFieldsService {
     private readonly customersCustomFieldsDataRepository: CustomersCustomFieldsDataRepository,
   ) {}
 
+  private validateCustomFields = async (key: string, store: string) => {
+    const result = await this.customersCustomFieldsRepository.getCustomByKey(
+      this.prismaService,
+      key,
+      store,
+    );
+
+    if (result) {
+      throw new ConflictException('키 값이 중복됩니다');
+    }
+  };
+
   createCustomFields = async (
     createCustomersCustomFieldsRequestDto: CreateCustomersCustomFieldsRequestDto,
     store: string,
   ) => {
+    await this.validateCustomFields(
+      createCustomersCustomFieldsRequestDto.key,
+      store,
+    );
     const payload = { ...createCustomersCustomFieldsRequestDto, store };
     await this.customersCustomFieldsRepository.createCustomFields(
       this.prismaService,

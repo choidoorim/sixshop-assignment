@@ -13,6 +13,18 @@ export class CustomersCustomFieldsRepository {
       data,
     });
 
+  getCustomByKey = (
+    prismaConnection: PrismaConnection,
+    key: string,
+    store: string,
+  ) =>
+    prismaConnection.customerCustomFields.findFirst({
+      where: {
+        key,
+        store,
+      },
+    });
+
   getCustomFields = (
     prismaConnection: PrismaConnection,
     store: string,

@@ -142,7 +142,86 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - [Conventional Commit](https://www.conventionalcommits.org/ko/v1.0.0-beta.4/) 을 준수합니다.
 - 폴더 네이밍은 케밥 케이스(kebab-case), 클래스는 파스칼 케이스(PascalCase), 메서드는 camelCase 로 작성합니다.
 - Swagger 를 통해 EndPoint 를 확인할 수 있습니다.
-- 요청과 응답에 대해서는 Validation, 역직렬화, 직렬화를 진행합니다.
+- 패키지 관리는 **Yarn** 을 사용합니다.
+- 요청과 응답은 DTO 를 통해서 이뤄지고 Validation, 역직렬화, 직렬화를 진행합니다.
+
+# 프로그램 시작방법
+### 1. ENV 파일 작성하기
+ENV 파일의 요구사항에 알맞게 작성합니다.
+```dotenv
+# TOKEN
+ACCESS_TOKEN_SECRET_KEY=
+ADMIN_ACCESS_TOKEN_SECRET_KEY=
+
+ADMIN_ACCESS_TOKEN_EXPIRATION_TIME=
+
+# DATABASE
+DATABASE_URL=
+
+# BCRYPT
+SALT_ROUNDS=
+```
+
+### 2. 패키지 설치하기
+```yarn install```
+
+### 3. 프로그램 실행하기
+#### 3-1. Database 반영
+```
+yarn prisma:push:dev
+```
+
+#### 3-2. Prisma Client 생성
+```
+yarn prisma:generate
+```
+
+#### 3-3. NestJS 실행
+```
+yarn start:dev
+```
+
+#### http://localhost:3000/api 에서 문서 확인을 할 수 있습니다.
+
+# 기능 소개
+## 1. Admin 회원가입 - POST /auth/register
+```
+1. 이미 존재하는 유저인가?
+    Yes - Conflict Exception: 이미 가입된 회원입니다
+    No - 다음 단계 진행
+2. Bcrypt 를 통한 비밀번호 암호화
+3. Admin 유저 데이터 저장 및 상점 Token 생성 후 Store DB 에 저장
+4. 회원가입 성공
+```
+
+## 2. Admin 로그인 - POST /auth/login
+```
+1. 존재하는 회원인가?
+    No - Notfound Exception: 존재하지 않는 회원입니다.
+    Yes - 다음 단계 진행
+2. 비밀번호가 일치하는가?
+    No - Unauthorized Exception: 비밀번호가 일치하지 않습니다.
+    Yes - 다음 단계 진행
+3. Access Token 발급 
+```
+
+## 3. Admin 상점 토큰 조회 - GET /admin/store/token
+```
+1. Admin Token 검증
+    Yes - 다음 단계 진행
+    No - Unauthorized Exception
+2. 상점 토큰 조회 후 Return
+```
+
+## 4. Customer 커스텀 필드 추가 - POST /customers/custom/fields
+
+## 5. Customer 커스텀 필드 조회 - GET /customer/custom/fields
+
+## 6. Customer 커스텀 필드 삭제 - DELETE /customers/custom/fields/{customFieldId}
+
+## 7. Product 생성 - POST /products
+
+## 8. 상품 주문 - POST /orders
 
 ### 처음에는 store 라는 랜덤한 uuid 를 넣어주는 방식을 생각했다. 그런데 그렇게 되면 누가 커스텀 필드를 작성하고 생성할 것인지에 대한 것이 알 수 없었다.
 

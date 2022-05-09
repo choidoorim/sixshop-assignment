@@ -16,7 +16,7 @@ export class LocalAdminStrategy extends PassportStrategy(
   async validate(email: string, password: string): Promise<any> {
     const admin = await this.authService.validateAdmin(email, password);
     if (!admin) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('비밀번호가 일치하지 않습니다');
     }
     return { adminId: admin.id };
   }
