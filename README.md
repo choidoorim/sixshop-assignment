@@ -126,15 +126,15 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - Jwt
 
 # API 목록
-- [Admin 회원가입 + Store 토큰 발급](#1.-Admin-회원가입:-POST-/auth/register)
-- [Admin 로그인 + Jwt 토큰 발급](#2.-Admin-로그인:-POST-/auth/login)
-- [고객 커스텀 필드 생성](#3.-Customer-커스텀-필드-생성:-POST-/customers/custom/fields)
-- [고객 커스텀 필드 목록 조회](#4.-Customer-커스텀-필드-조회:-GET-/customer/custom/fields)
-- [고객 커스텀 필드 삭제](#5.-Customer-커스텀-필드-삭제:-DELETE-/customers/custom/fields/{customFieldId})
-- [고객 생성](#6.-Customer-생성:-POST-/customers)
-- [고객 정보 조회](#7.-Customer-조회:-GET-/customers/{customerId})
-- [상품 생성](#8.-Product-생성:-POST-/products)
-- [상품 주문](#9.-상품-주문:-POST-/orders)
+- [Admin 회원가입 + Store 토큰 발급](#1-admin-회원가입-post-authregister)
+- [Admin 로그인 + Jwt 토큰 발급](#2-admin-로그인-post-authlogin)
+- [고객 커스텀 필드 생성](#3-customer-커스텀-필드-생성-post-customerscustomfields)
+- [고객 커스텀 필드 목록 조회](#4-customer-커스텀-필드-조회-get-customercustomfields)
+- [고객 커스텀 필드 삭제](#5-customer-커스텀-필드-삭제-delete-customerscustomfieldscustomFieldId)
+- [고객 생성](#6-customer-생성-post-customers)
+- [고객 정보 조회](#7-customer-조회-get-customerscustomerId)
+- [상품 생성](#8-products-생성-post-products)
+- [상품 주문](#9.-상품-주문-post-orders)
 
 
 # Code Convention
