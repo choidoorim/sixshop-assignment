@@ -63,26 +63,26 @@ export const DeleteCustomerCustomFields = () =>
 
 export const UpdateCustomerCustomFieldsKey = () =>
   applyDecorators(
-    Patch('/:customFieldId'),
+    Patch('/:customFieldId/key'),
     JwtAdminAuth(),
     ApiDoc({
-      summary: '고객 커스텀 필드 Type 수정',
+      summary: '고객 커스텀 필드 key 수정',
       okRes: {
         schema: {},
       },
-      bodyOptions: { type: UpdateCustomersCustomFieldsKeyBodyRequestDto },
+      bodyOptions: { type: UpdateCustomersCustomFieldsBodyRequestDto },
     }),
   );
 
 export const UpdateCustomerCustomFields = () =>
   applyDecorators(
-    Patch('/:customFieldId/key'),
+    Patch('/:customFieldId'),
     JwtAdminAuth(),
     ApiDoc({
-      summary: '고객 커스텀 필드 key, required 수정',
+      summary: '고객 커스텀 필드 type, required 수정',
       okRes: {
         schema: {},
       },
-      bodyOptions: { type: UpdateCustomersCustomFieldsBodyRequestDto },
+      bodyOptions: { type: UpdateCustomersCustomFieldsKeyBodyRequestDto },
     }),
   );
