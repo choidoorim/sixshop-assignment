@@ -126,15 +126,15 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - Jwt
 
 # API 목록
-- [Admin 회원가입 + Store 토큰 발급](#1-admin-회원가입-post-authregister)
-- [Admin 로그인 + Jwt 토큰 발급](#2-admin-로그인-post-authlogin)
-- [고객 커스텀 필드 생성](#3-customer-커스텀-필드-생성-post-customerscustomfields)
-- [고객 커스텀 필드 목록 조회](#4-customer-커스텀-필드-조회-get-customercustomfields)
-- [고객 커스텀 필드 삭제](#5-customer-커스텀-필드-삭제-delete-customerscustomfieldscustomFieldId)
-- [고객 생성](#6-customer-생성-post-customers)
-- [고객 정보 조회](#7-customer-조회-get-customerscustomerId)
-- [상품 생성](#8-products-생성-post-products)
-- [상품 주문](#9.-상품-주문-post-orders)
+- [Admin 회원가입 + Store 토큰 발급](#1-admin-회원가입)
+- [Admin 로그인 + Jwt 토큰 발급](#2-admin-로그인)
+- [고객 커스텀 필드 생성](#3-customer-커스텀-필드-생성)
+- [고객 커스텀 필드 목록 조회](#4-customer-커스텀-필드-조회)
+- [고객 커스텀 필드 삭제](#5-customer-커스텀-필드-삭제)
+- [고객 생성](#6-customer-생성)
+- [고객 정보 조회](#7-customer-조회)
+- [상품 생성](#8-products-생성)
+- [상품 주문](#9-상품-주문)
 
 
 # Code Convention
@@ -205,7 +205,8 @@ value - 커스텀 필드의 값
 배송완료: ARRIVED
 ```
 
-## 1. Admin 회원가입: POST /auth/register
+## 1. Admin 회원가입
+### POST /auth/register
 ```
 1. 이미 존재하는 유저인가?
     Yes - Conflict Exception: 이미 가입된 회원입니다
@@ -215,7 +216,8 @@ value - 커스텀 필드의 값
 4. 회원가입 성공
 ```
 
-## 2. Admin 로그인: POST /auth/login
+## 2. Admin 로그인
+### POST /auth/login
 ```
 1. 존재하는 회원인가?
     No - Notfound Exception: 존재하지 않는 회원입니다.
@@ -226,7 +228,8 @@ value - 커스텀 필드의 값
 3. Access Token 발급 
 ```
 
-## 3. Customer 커스텀 필드 생성: POST /customers/custom/fields
+## 3. Customer 커스텀 필드 생성
+### POST /customers/custom/fields
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -237,7 +240,8 @@ value - 커스텀 필드의 값
 3. 커스텀 필드 생성
 ```
 
-## 4. Customer 커스텀 필드 조회: GET /customer/custom/fields
+## 4. Customer 커스텀 필드 조회
+### GET /customer/custom/fields
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -248,7 +252,8 @@ value - 커스텀 필드의 값
     No - null Return
 ```
 
-## 5. Customer 커스텀 필드 삭제: DELETE /customers/custom/fields/{customFieldId}
+## 5. Customer 커스텀 필드 삭제
+### DELETE /customers/custom/fields/{customFieldId}
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -262,7 +267,8 @@ value - 커스텀 필드의 값
 4. Customer 커스텀 필드를 삭제하면서 관련된 커스텀 필드 데이터들을 함께 삭제
 ```
 
-## 6. Customer 생성: POST /customers
+## 6. Customer 생성
+### POST /customers
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -286,7 +292,8 @@ value - 커스텀 필드의 값
 8. 고객 생성 및 Customer 커스텀 필드 데이터가 있을 경우 추가로 생성
 ```
 
-## 7. Customer 조회: GET /customers/{customerId}
+## 7. Customer 조회
+### GET /customers/:customerId
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -304,7 +311,8 @@ value - 커스텀 필드의 값
 6. 고객 및 커스텀 필드 데이터(key, value...) 를 Return 
 ```
 
-## 8. Product 생성: POST /products
+## 8. Product 생성
+### POST /products
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -312,7 +320,8 @@ value - 커스텀 필드의 값
 2. 상품 생성
 ```
 
-## 9. 상품 주문: POST /orders
+## 9. 상품 주문
+### POST /orders
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
