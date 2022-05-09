@@ -22,4 +22,11 @@ export class AdminRepository {
         email,
       },
     });
+
+  getAdmin = (prismaConnection: PrismaConnection, adminId: string) =>
+    prismaConnection.admin.findUnique({
+      where: {
+        id: adminId,
+      },
+    });
 }

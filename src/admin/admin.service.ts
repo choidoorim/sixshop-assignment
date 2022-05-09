@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Admin } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
@@ -21,6 +22,18 @@ export class AdminService {
     private readonly storesRepository: StoresRepository,
     private readonly bcryptService: BcryptService,
   ) {}
+
+  getAdmin = async (adminId: string) => {
+    const result = await this.adminRepository.getAdmin(
+      this.prismaService,
+      adminId,
+    );
+    if (!result) {
+      throw new NotFoundException('존재하지 않는 Admin 입니다');
+    }
+    const { password, updatedAt, id, ...rest } = result;
+    return rest;
+  };
 
   private validateAdminByEmail = async (email: string): Promise<void> => {
     const result = await this.adminRepository.findByEmail(

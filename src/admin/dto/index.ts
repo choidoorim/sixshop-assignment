@@ -1,1 +1,1 @@
-export * from './get-store-token-response.dto';
+export * from './get-admin-response.dto';
