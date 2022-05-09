@@ -214,10 +214,30 @@ yarn start:dev
 ```
 
 ## 4. Customer 커스텀 필드 추가 - POST /customers/custom/fields
+```
+1. Admin Token 검증
+    Yes - 다음 단계 진행
+    No - Unauthorized Exception
+2. 이미 존재하는 key 값이 있는가?
+    Yes - Conflict Exception: 키 값이 중복됩니다.
+    No - 다음 단계 진행
+3. 커스텀 필드 생성
+```
 
 ## 5. Customer 커스텀 필드 조회 - GET /customer/custom/fields
+```
+1. Customer 커스텀 필드 조회
+2. 커스텀 필드가 존재하는가?
+    Yes - id, type, key 등 데이터 Return
+    No - null Return
+```
 
 ## 6. Customer 커스텀 필드 삭제 - DELETE /customers/custom/fields/{customFieldId}
+```
+1. 삭제하려는 커스텀 필드의 소유자가 맞는가?
+    Yes - 다음 단계 진행
+    No - 
+```
 
 ## 7. Product 생성 - POST /products
 
