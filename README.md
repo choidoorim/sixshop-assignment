@@ -312,6 +312,9 @@ value - { "value": 커스텀 필드의 값 }
 5. 요청한 커스텀 필드 데이터들 중에 누락된 필수 커스텀 필드가 존재하는가?
     Yes - BadRequest Exception: 필수 커스텀 필드 ID - ${id} 가 누락됐습니다
     No - 다음 단계 진행
+6. 커스텀 Id 가 다른 것이 있는가?
+    Yes - BadRequest Exception: 잘못된 커스텀 필드 id 가 존재합니다
+    No - 다음 단계 진행
 6. 커스텀 필드의 타입과 요청하는 커스텀 필드 데이터들의 타입이 일치하는가?
     Yes - 다음 단계 진행
     No - BadRequest Exception: 데이터의 커스텀 필드 타입이 일치하지 않습니다
