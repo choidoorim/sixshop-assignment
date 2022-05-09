@@ -29,12 +29,7 @@
 📂 src
  └── 📂 admin 
       ├── 📂 dto
-          ├── 📄 get-store-token-response.dto.ts
-          ├── 📄 index.ts
       ├── 📂 respository
-          ├── 📄 admin.repository.ts
-          ├── 📄 stores.repository.ts
-          ├── 📄 index.ts
       ├── 📄 admin.controller.decorator.ts
       ├── 📄 admin.controller.ts
       ├── 📄 admin.module.ts
@@ -42,11 +37,7 @@
  └── 📂 authentication 
       └── 📂 auth 
           ├── 📂 dto
-              ├── 📄 create-admin-request.dto.ts
-              ├── 📄 login-admin-response.dto.ts
-              ├── 📄 index.ts
           ├── 📂 type
-              ├── 📄 index.ts
           ├── 📄 admin.controller.decorator.ts
           ├── 📄 admin.controller.ts
           ├── 📄 admin.module.ts
@@ -55,24 +46,13 @@
  └── 📂 customers
       └── 📂 custom-fields
           ├── 📂 dto
-              ├── 📄 create-customer-custom-fields-request.dto.ts
-              ├── 📄 delete-customers-custom-fields-request.dto.ts
-              ├── 📄 get-customer-response.dto.ts
-              ├── 📄 index.ts
           ├── 📂 repository
-              ├── 📄 customers-custom-fields.repository.ts
-              ├── 📄 customers-custom-fields-data.repository.ts
           ├── 📄 customers-custom-fields.controller.decorator.ts
           ├── 📄 customers-custom-fields.controller.ts
           ├── 📄 customers-custom-fields.module.ts
           ├── 📄 customers-custom-fields.service.ts
       ├── 📂 dto
-          ├── 📄 create-customer-request.dto.ts
-          ├── 📄 get-customer-request.dto.ts
-          ├── 📄 get-customer-response.dto.ts
-          ├── 📄 index.ts
       ├── 📂 type
-          ├── 📄 index.ts
       ├── 📄 customers.controller.decorator.ts
       ├── 📄 customers.controller.ts
       ├── 📄 customers.module.ts
@@ -80,8 +60,6 @@
       ├── 📄 customers.service.ts
  └── 📂 orders
       ├── 📂 dto
-          ├── 📄 create-order-request.dto.ts
-          ├── 📄 index.ts
       ├── 📄 orders.controller.decorator.ts
       ├── 📄 orders.controller.ts
       ├── 📄 orders.module.ts
@@ -89,8 +67,6 @@
       ├── 📄 orders.service.ts
  └── 📂 products
       ├── 📂 dto
-          ├── 📄 create-product-request.dto.ts
-          ├── 📄 index.ts
       ├── 📄 orders.controller.decorator.ts
       ├── 📄 orders.controller.ts
       ├── 📄 orders.module.ts
