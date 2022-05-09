@@ -13,7 +13,7 @@ import { ApiDoc } from '@app/config/decorator';
 import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
-  UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  UpdateCustomersCustomFieldsKeyBodyRequestDto,
   UpdateCustomersCustomFieldsBodyRequestDto,
 } from './dto';
 
@@ -61,22 +61,22 @@ export const DeleteCustomerCustomFields = () =>
     }),
   );
 
-export const UpdateCustomerCustomFieldsType = () =>
+export const UpdateCustomerCustomFieldsKey = () =>
   applyDecorators(
-    Patch('/:customFieldId/type'),
+    Patch('/:customFieldId'),
     JwtAdminAuth(),
     ApiDoc({
       summary: '고객 커스텀 필드 Type 수정',
       okRes: {
         schema: {},
       },
-      bodyOptions: { type: UpdateCustomersCustomFieldsTypeBodyRequestDto },
+      bodyOptions: { type: UpdateCustomersCustomFieldsKeyBodyRequestDto },
     }),
   );
 
 export const UpdateCustomerCustomFields = () =>
   applyDecorators(
-    Patch('/:customFieldId'),
+    Patch('/:customFieldId/key'),
     JwtAdminAuth(),
     ApiDoc({
       summary: '고객 커스텀 필드 key, required 수정',

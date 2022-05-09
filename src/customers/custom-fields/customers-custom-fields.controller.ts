@@ -6,7 +6,7 @@ import {
   CreateCustomerCustomField,
   GetCustomerCustomFields,
   DeleteCustomerCustomFields,
-  UpdateCustomerCustomFieldsType,
+  UpdateCustomerCustomFieldsKey,
   UpdateCustomerCustomFields,
 } from './customers-custom-fields.controller.decorator';
 import { CustomersCustomFieldsService } from './customers-custom-fields.service';
@@ -15,8 +15,8 @@ import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
   DeleteCustomersCustomFieldsRequestDto,
-  UpdateCustomersCustomFieldsTypeParamRequestDto,
-  UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  UpdateCustomersCustomFieldsKeyParamRequestDto,
+  UpdateCustomersCustomFieldsKeyBodyRequestDto,
   UpdateCustomersCustomFieldsParamRequestDto,
   UpdateCustomersCustomFieldsBodyRequestDto,
 } from './dto';
@@ -60,14 +60,14 @@ export class CustomersCustomFieldsController {
     );
   }
 
-  @UpdateCustomerCustomFieldsType()
-  updateCustomerCustomFieldsType(
+  @UpdateCustomerCustomFieldsKey()
+  updateCustomerCustomFieldsKey(
     @JwtToken() { store }: AdminJwtRequestDto,
     @Param()
-    paramDto: UpdateCustomersCustomFieldsTypeParamRequestDto,
-    @Body() bodyDto: UpdateCustomersCustomFieldsTypeBodyRequestDto,
+    paramDto: UpdateCustomersCustomFieldsKeyParamRequestDto,
+    @Body() bodyDto: UpdateCustomersCustomFieldsKeyBodyRequestDto,
   ) {
-    return this.customersCustomFieldsService.updateTypeOfCustomField(
+    return this.customersCustomFieldsService.updateKeyOfCustomField(
       store,
       paramDto,
       bodyDto,

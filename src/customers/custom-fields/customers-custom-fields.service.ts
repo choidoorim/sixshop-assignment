@@ -18,8 +18,8 @@ import {
 import {
   CreateCustomersCustomFieldsRequestDto,
   DeleteCustomersCustomFieldsRequestDto,
-  UpdateCustomersCustomFieldsTypeParamRequestDto,
-  UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  UpdateCustomersCustomFieldsKeyParamRequestDto,
+  UpdateCustomersCustomFieldsKeyBodyRequestDto,
   UpdateCustomersCustomFieldsParamRequestDto,
   UpdateCustomersCustomFieldsBodyRequestDto,
 } from './dto';
@@ -123,13 +123,12 @@ export class CustomersCustomFieldsService {
     }
   };
 
-  updateTypeOfCustomField = async (
+  updateKeyOfCustomField = async (
     store: string,
-    { customFieldId }: UpdateCustomersCustomFieldsTypeParamRequestDto,
-    bodyDto: UpdateCustomersCustomFieldsTypeBodyRequestDto,
+    { customFieldId }: UpdateCustomersCustomFieldsKeyParamRequestDto,
+    bodyDto: UpdateCustomersCustomFieldsKeyBodyRequestDto,
   ) => {
     await this.validateCustomFields(customFieldId, store);
-    await this.validateCustomFieldsDataForUpdate(customFieldId);
 
     await this.customersCustomFieldsRepository.updateCustomFields(
       this.prismaService,
@@ -146,6 +145,7 @@ export class CustomersCustomFieldsService {
     bodyDto: UpdateCustomersCustomFieldsBodyRequestDto,
   ) => {
     await this.validateCustomFields(customFieldId, store);
+    await this.validateCustomFieldsDataForUpdate(customFieldId);
 
     await this.customersCustomFieldsRepository.updateCustomFields(
       this.prismaService,

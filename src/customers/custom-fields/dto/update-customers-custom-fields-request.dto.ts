@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { MetaType } from '@prisma/client';
 
 export class UpdateCustomersCustomFieldsParamRequestDto {
   @ApiProperty()
@@ -9,10 +10,10 @@ export class UpdateCustomersCustomFieldsParamRequestDto {
 }
 
 export class UpdateCustomersCustomFieldsBodyRequestDto {
-  @ApiProperty()
+  @ApiProperty({ enum: [MetaType] })
   @IsNotEmpty()
-  @IsString()
-  readonly key: string;
+  @IsEnum(MetaType)
+  readonly type: MetaType;
 
   @ApiProperty()
   @IsNotEmpty()

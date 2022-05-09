@@ -132,8 +132,8 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - [고객 커스텀 필드 생성](#4-customer-커스텀-필드-생성)
 - [고객 커스텀 필드 목록 조회](#5-customer-커스텀-필드-조회)
 - [고객 커스텀 필드 삭제](#6-customer-커스텀-필드-삭제)
-- [고객 커스텀 필드 Type 수정](#7-customer-커스텀-필드-type-값-수정)
-- [고객 커스텀 필드 Key, Required 수정](#8-customer-커스텀-필드-key-required-값-수정)
+- [고객 커스텀 필드 Type 수정](#7-customer-커스텀-필드-type-required-값-수정)
+- [고객 커스텀 필드 Key, Required 수정](#8-customer-커스텀-필드-key-값-수정)
 - [고객 생성](#9-customer-생성)
 - [고객 정보 조회](#10-customer-조회)
 - [상품 생성](#11-products-생성)
@@ -282,8 +282,8 @@ value - 커스텀 필드의 값
 4. Customer 커스텀 필드를 삭제하면서 관련된 커스텀 필드 데이터들을 함께 삭제
 ```
 
-## 7. Customer 커스텀 필드 type 값 수정
-### Patch /customers/custom/fields/{customFieldId}/type
+## 7. Customer 커스텀 필드 type, required 값 수정
+### Patch /customers/custom/fields/{customFieldId}
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -300,8 +300,8 @@ value - 커스텀 필드의 값
 5. 커스텀 필드 타입 업데이트
 ```
 
-## 8. Customer 커스텀 필드 Key, Required 값 수정
-### Patch /customers/custom/fields/{customFieldId}
+## 8. Customer 커스텀 필드 key 값 수정
+### Patch /customers/custom/fields/{customFieldId}/key
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
