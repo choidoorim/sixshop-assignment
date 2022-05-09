@@ -9,9 +9,9 @@ import * as _ from 'lodash';
 
 import { generateHash } from '@app/utils';
 import {
-  getCustomFieldsValue,
   isRightType,
   validateTokenStore,
+  getCustomFieldsValue,
 } from '@api/shared';
 import { PrismaService } from '@app/prisma';
 

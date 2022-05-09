@@ -15,7 +15,7 @@ import {
 } from './repository';
 import {
   CreateCustomersCustomFieldsRequestDto,
-  DeleteCustomerCustomFieldsRequestDto,
+  DeleteCustomersCustomFieldsRequestDto,
 } from './dto';
 
 // NOTE: 커스텀 필드 데이터를 update 할 때는, 이미 존재하는 커스텀 필드는 추가하지 못하게 해야한다.
@@ -52,7 +52,7 @@ export class CustomersCustomFieldsService {
   };
 
   deleteCustomField = async (
-    { customFieldId }: DeleteCustomerCustomFieldsRequestDto,
+    { customFieldId }: DeleteCustomersCustomFieldsRequestDto,
     store: string,
   ) => {
     const customFields =

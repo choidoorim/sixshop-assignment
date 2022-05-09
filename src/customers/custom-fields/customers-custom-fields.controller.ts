@@ -12,7 +12,7 @@ import { Body, Param } from '@nestjs/common';
 import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
-  DeleteCustomerCustomFieldsRequestDto,
+  DeleteCustomersCustomFieldsRequestDto,
 } from './dto';
 
 // NOTE: 타입을 한 번 설정하면 수정은 할 수 없도록 하였다.
@@ -46,7 +46,7 @@ export class CustomersCustomFieldsController {
   @DeleteCustomerCustomFields()
   deleteCustomerCustomFields(
     @Param()
-    deleteCustomerCustomFieldsRequestDto: DeleteCustomerCustomFieldsRequestDto,
+    deleteCustomerCustomFieldsRequestDto: DeleteCustomersCustomFieldsRequestDto,
     @JwtToken() { store }: AdminJwtRequestDto,
   ) {
     return this.customersCustomFieldsService.deleteCustomField(
