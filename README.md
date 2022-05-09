@@ -5,11 +5,11 @@
 - 하나의 Admin 계정은 하나의 상점을 가질 수 있습니다.
 - Store 테이블의 token 을 이용한 인증을 통해 Customer, Product, Order 기능을 사용할 수 있습니다.
 
-### 2. ***(Customer, Product, Order)CustomFields
+### 2. (Customer, Product, Order)CustomFields
 - Admin 계정의 소유자가 Customer, Product, Order 별로 커스텀필드를 설정할 수 있는 테이블입니다.
 - key 컬럼에 커스텀 필드 명칭 대한 데이터를 저장합니다.
 
-### 3. ***(Customer, Product, Order)CustomFiledsData
+### 3. (Customer, Product, Order)CustomFiledsData
 - 설정한 커스텀 필드에 대한 실제 데이터들이 존재하는 테이블입니다.
 - Json 타입의 value 컬럼에 ```{ “value”: data(Int, String, Boolean) }```  해당 형식으로 커스텀 필드 데이터가 저장됩니다.
 
@@ -93,6 +93,9 @@
 
 ### prisma
 Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존재하는 디렉토리 입니다. 
+
+### shared
+도메인에서 공통으로 사용되는 로직들을 관리하는 디렉토리 입니다.
 
 # 기술 스택
 - Typescript
