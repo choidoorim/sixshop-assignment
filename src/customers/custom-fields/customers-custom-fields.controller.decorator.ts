@@ -3,8 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAdminAuth } from '@app/utils/guard';
@@ -14,6 +14,7 @@ import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
   UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  UpdateCustomersCustomFieldsBodyRequestDto,
 } from './dto';
 
 export const CustomersCustomFieldsController = () =>
@@ -60,9 +61,9 @@ export const DeleteCustomerCustomFields = () =>
     }),
   );
 
-export const UpdateCustomerCustomFields = () =>
+export const UpdateCustomerCustomFieldsType = () =>
   applyDecorators(
-    Put('/:customFieldId/type'),
+    Patch('/:customFieldId/type'),
     JwtAdminAuth(),
     ApiDoc({
       summary: '고객 커스텀 필드 Type 수정',
@@ -70,5 +71,18 @@ export const UpdateCustomerCustomFields = () =>
         schema: {},
       },
       bodyOptions: { type: UpdateCustomersCustomFieldsTypeBodyRequestDto },
+    }),
+  );
+
+export const UpdateCustomerCustomFields = () =>
+  applyDecorators(
+    Patch('/:customFieldId'),
+    JwtAdminAuth(),
+    ApiDoc({
+      summary: '고객 커스텀 필드 key, required 수정',
+      okRes: {
+        schema: {},
+      },
+      bodyOptions: { type: UpdateCustomersCustomFieldsBodyRequestDto },
     }),
   );

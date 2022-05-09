@@ -20,6 +20,8 @@ import {
   DeleteCustomersCustomFieldsRequestDto,
   UpdateCustomersCustomFieldsTypeParamRequestDto,
   UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  UpdateCustomersCustomFieldsParamRequestDto,
+  UpdateCustomersCustomFieldsBodyRequestDto,
 } from './dto';
 
 // NOTE: 커스텀 필드 데이터를 update 할 때는, 이미 존재하는 커스텀 필드는 추가하지 못하게 해야한다.
@@ -128,6 +130,22 @@ export class CustomersCustomFieldsService {
   ) => {
     await this.validateCustomFields(customFieldId, store);
     await this.validateCustomFieldsDataForUpdate(customFieldId);
+
+    await this.customersCustomFieldsRepository.updateCustomFields(
+      this.prismaService,
+      customFieldId,
+      bodyDto,
+    );
+
+    return null;
+  };
+
+  updateCustomerField = async (
+    store: string,
+    { customFieldId }: UpdateCustomersCustomFieldsParamRequestDto,
+    bodyDto: UpdateCustomersCustomFieldsBodyRequestDto,
+  ) => {
+    await this.validateCustomFields(customFieldId, store);
 
     await this.customersCustomFieldsRepository.updateCustomFields(
       this.prismaService,

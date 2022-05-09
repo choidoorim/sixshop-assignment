@@ -129,14 +129,15 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - [Admin 회원가입 + Store 토큰 발급](#1-admin-회원가입)
 - [Admin 로그인 + Jwt 토큰 발급](#2-admin-로그인)
 - [Admin 정보 조회](#3-admin-정보-조회)
-- [고객 커스텀 필드 생성](#3-customer-커스텀-필드-생성)
-- [고객 커스텀 필드 목록 조회](#4-customer-커스텀-필드-조회)
-- [고객 커스텀 필드 삭제](#5-customer-커스텀-필드-삭제)
-- [고객 커스텀 필드 수정](#)
-- [고객 생성](#6-customer-생성)
-- [고객 정보 조회](#7-customer-조회)
-- [상품 생성](#8-products-생성)
-- [상품 주문](#9-상품-주문)
+- [고객 커스텀 필드 생성](#4-customer-커스텀-필드-생성)
+- [고객 커스텀 필드 목록 조회](#5-customer-커스텀-필드-조회)
+- [고객 커스텀 필드 삭제](#6-customer-커스텀-필드-삭제)
+- [고객 커스텀 필드 Type 수정](#7-customer-커스텀-필드-type-값-수정)
+- [고객 커스텀 필드 Key, Required 수정](#8-customer-커스텀-필드-key-required-값-수정)
+- [고객 생성](#9-customer-생성)
+- [고객 정보 조회](#10-customer-조회)
+- [상품 생성](#11-products-생성)
+- [상품 주문](#12-상품-주문)
 
 
 # Code Convention
@@ -281,8 +282,8 @@ value - 커스텀 필드의 값
 4. Customer 커스텀 필드를 삭제하면서 관련된 커스텀 필드 데이터들을 함께 삭제
 ```
 
-## 7. Customer 커스텀 필드 key, type 값 수정
-### Put /customers/custom/fields/{customFieldId}/type
+## 7. Customer 커스텀 필드 type 값 수정
+### Patch /customers/custom/fields/{customFieldId}/type
 ```
 1. Admin Token 검증
     Yes - 다음 단계 진행
@@ -296,12 +297,25 @@ value - 커스텀 필드의 값
 4. 커스텀 필드를 사용하고 있는 커스텀 필드 데이터가 있는가?
     Yes - Forbidden Exception: 커스텀 필드 데이터가 존재하기에 커스텀 필드를 수정할 수 없습니다
     No - 다음 단계 진행
-5. 커스텀 필드 업데이트
+5. 커스텀 필드 타입 업데이트
 ```
 
-## 8. Customer 커스텀 필드 
+## 8. Customer 커스텀 필드 Key, Required 값 수정
+### Patch /customers/custom/fields/{customFieldId}
+```
+1. Admin Token 검증
+    Yes - 다음 단계 진행
+    No - Unauthorized Exception
+2. 존재하는 커스텀 필드인가?
+    Yes - 다음 단계 진행
+    No - NotFound Exception: 커스텀 필드가 존재하지 않습니다.
+3. 수정하려는 커스텀 필드의 소유자가 맞는가?(store id 값 비교)
+    Yes - 다음 단계 진행
+    No - Forbidden Exception: store id 값이 다릅니다 
+5. 커스텀 필드 타입 업데이트
+```
 
-## 7. Customer 생성
+## 9. Customer 생성
 ### POST /customers
 ```
 1. Admin Token 검증
@@ -326,7 +340,7 @@ value - 커스텀 필드의 값
 8. 고객 생성 및 Customer 커스텀 필드 데이터가 있을 경우 추가로 생성
 ```
 
-## 8. Customer 조회
+## 10. Customer 조회
 ### GET /customers/:customerId
 ```
 1. Admin Token 검증
@@ -345,7 +359,7 @@ value - 커스텀 필드의 값
 6. 고객 및 커스텀 필드 데이터(key, value...) 를 Return 
 ```
 
-## 9. Product 생성
+## 11. Product 생성
 ### POST /products
 ```
 1. Admin Token 검증
@@ -354,7 +368,7 @@ value - 커스텀 필드의 값
 2. 상품 생성
 ```
 
-## 10. 상품 주문
+## 12. 상품 주문
 ### POST /orders
 ```
 1. Admin Token 검증
