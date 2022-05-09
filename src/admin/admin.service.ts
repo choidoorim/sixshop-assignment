@@ -7,7 +7,7 @@ import { Admin } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from '@app/prisma';
-import { generateHash } from '@app/utils';
+import { BcryptService } from '@app/utils/bcrypt';
 
 import { AdminRepository, StoresRepository } from './repository';
 import { CreateAdminRequestDto } from '../authentication/auth/dto';
@@ -19,6 +19,7 @@ export class AdminService {
     private readonly prismaService: PrismaService,
     private readonly adminRepository: AdminRepository,
     private readonly storesRepository: StoresRepository,
+    private readonly bcryptService: BcryptService,
   ) {}
 
   private validateAdminByEmail = async (email: string): Promise<void> => {
@@ -34,7 +35,11 @@ export class AdminService {
 
   createAdmin = async ({ password, email, name }: CreateAdminRequestDto) => {
     await this.validateAdminByEmail(email);
-    const payload = { password: await generateHash(password), email, name };
+    const payload = {
+      password: await this.bcryptService.generateHash(password),
+      email,
+      name,
+    };
 
     try {
       await this.prismaService.$transaction(async (prisma) => {

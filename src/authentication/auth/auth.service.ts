@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { isMatch } from '@app/utils';
+import { BcryptService } from '@app/utils/bcrypt';
 
 import { AdminService } from '../../admin/admin.service';
 import { CreateAdminRequestDto } from './dto';
@@ -11,11 +11,12 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly adminService: AdminService,
+    private readonly bcryptService: BcryptService,
   ) {}
 
   validateAdmin = async (email: string, password: string) => {
     const admin = await this.adminService.findAdminByEmail(email);
-    if (admin && (await isMatch(admin.password, password))) {
+    if (admin && (await this.bcryptService.isMatch(admin.password, password))) {
       const { password, ...rest } = admin;
       return rest;
     }

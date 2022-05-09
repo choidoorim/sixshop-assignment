@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
 import { JwtTokenStrategy } from '@app/utils/strategy';
+import { BcryptModule } from '@app/utils/bcrypt';
 
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
@@ -16,6 +17,7 @@ import { AdminRepository, StoresRepository } from './repository';
         secret: configService.get<string>('ACCESS_TOKEN_SECRET_KEY'),
       }),
     }),
+    BcryptModule,
   ],
   controllers: [AdminController],
   providers: [

@@ -7,13 +7,13 @@ import {
 import { CustomerCustomFields, CustomerCustomFieldsData } from '@prisma/client';
 import * as _ from 'lodash';
 
-import { generateHash } from '@app/utils';
 import {
   isRightType,
   validateTokenStore,
   getCustomFieldsValue,
 } from '@api/shared';
 import { PrismaService } from '@app/prisma';
+import { BcryptService } from '@app/utils/bcrypt';
 
 import { CustomersRepository } from './customers.repository';
 import {
@@ -36,6 +36,7 @@ export class CustomersService {
     private readonly customersCustomFieldsService: CustomersCustomFieldsService,
     private readonly customersCustomFieldsRepository: CustomersCustomFieldsRepository,
     private readonly customersCustomFieldsDataRepository: CustomersCustomFieldsDataRepository,
+    private readonly bcryptService: BcryptService,
   ) {}
 
   validateCustomer = async (customerId: string) => {
@@ -142,7 +143,7 @@ export class CustomersService {
 
     const customerData = {
       store,
-      password: await generateHash(password),
+      password: await this.bcryptService.generateHash(password),
       ...customerDto,
     };
 
