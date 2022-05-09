@@ -197,7 +197,7 @@ required - 필수 여부
 (Customer/Product/Order)CustomFieldsData Table 에는 상점 별 커스텀 필드의 값(value)들이 저장됩니다. 
 ```
 ...
-value - 커스텀 필드의 값
+value - { "value": 커스텀 필드의 값 }
 ```
 
 ## 주문 Status
