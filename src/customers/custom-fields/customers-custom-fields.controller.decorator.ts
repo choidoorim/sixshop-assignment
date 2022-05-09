@@ -13,6 +13,7 @@ import { ApiDoc } from '@app/config/decorator';
 import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
+  UpdateCustomersCustomFieldsTypeBodyRequestDto,
 } from './dto';
 
 export const CustomersCustomFieldsController = () =>
@@ -61,12 +62,13 @@ export const DeleteCustomerCustomFields = () =>
 
 export const UpdateCustomerCustomFields = () =>
   applyDecorators(
-    Put('/customFieldId'),
+    Put('/:customFieldId/type'),
     JwtAdminAuth(),
     ApiDoc({
-      summary: '고객 커스텀 필드 수정',
+      summary: '고객 커스텀 필드 Type 수정',
       okRes: {
         schema: {},
       },
+      bodyOptions: { type: UpdateCustomersCustomFieldsTypeBodyRequestDto },
     }),
   );

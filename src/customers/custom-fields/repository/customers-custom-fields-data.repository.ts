@@ -23,4 +23,14 @@ export class CustomersCustomFieldsDataRepository {
       },
     });
   };
+
+  getCustomFieldsData = (
+    prismaConnection: PrismaConnection,
+    customFieldsId: string,
+  ) =>
+    prismaConnection.customerCustomFieldsData.findFirst({
+      where: {
+        customFieldsId,
+      },
+    });
 }

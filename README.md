@@ -132,6 +132,7 @@ Database 과 관련된 설정, 테이블에 매핑되는 Data Model 등이 존�
 - [고객 커스텀 필드 생성](#3-customer-커스텀-필드-생성)
 - [고객 커스텀 필드 목록 조회](#4-customer-커스텀-필드-조회)
 - [고객 커스텀 필드 삭제](#5-customer-커스텀-필드-삭제)
+- [고객 커스텀 필드 수정](#)
 - [고객 생성](#6-customer-생성)
 - [고객 정보 조회](#7-customer-조회)
 - [상품 생성](#8-products-생성)
@@ -274,11 +275,31 @@ value - 커스텀 필드의 값
 2. 존재하는 커스텀 필드인가?
     Yes - 다음 단계 진행
     No - NotFound Exception: 커스텀 필드가 존재하지 않습니다.
-3. 삭제하려는 커스텀 필드의 소유자가 맞는가?
+3. 삭제하려는 커스텀 필드의 소유자가 맞는가?(store id 값 비교)
     Yes - 다음 단계 진행
     No - Forbidden Exception: store id 값이 다릅니다 
 4. Customer 커스텀 필드를 삭제하면서 관련된 커스텀 필드 데이터들을 함께 삭제
 ```
+
+## 7. Customer 커스텀 필드 key, type 값 수정
+### Put /customers/custom/fields/{customFieldId}/type
+```
+1. Admin Token 검증
+    Yes - 다음 단계 진행
+    No - Unauthorized Exception
+2. 존재하는 커스텀 필드인가?
+    Yes - 다음 단계 진행
+    No - NotFound Exception: 커스텀 필드가 존재하지 않습니다.
+3. 수정하려는 커스텀 필드의 소유자가 맞는가?(store id 값 비교)
+    Yes - 다음 단계 진행
+    No - Forbidden Exception: store id 값이 다릅니다 
+4. 커스텀 필드를 사용하고 있는 커스텀 필드 데이터가 있는가?
+    Yes - Forbidden Exception: 커스텀 필드 데이터가 존재하기에 커스텀 필드를 수정할 수 없습니다
+    No - 다음 단계 진행
+5. 커스텀 필드 업데이트
+```
+
+## 8. Customer 커스텀 필드 
 
 ## 7. Customer 생성
 ### POST /customers

@@ -6,6 +6,7 @@ import {
   CreateCustomerCustomField,
   GetCustomerCustomFields,
   DeleteCustomerCustomFields,
+  UpdateCustomerCustomFields,
 } from './customers-custom-fields.controller.decorator';
 import { CustomersCustomFieldsService } from './customers-custom-fields.service';
 import { Body, Param } from '@nestjs/common';
@@ -13,9 +14,10 @@ import {
   CreateCustomersCustomFieldsRequestDto,
   GetCustomersCustomFieldsResponseDto,
   DeleteCustomersCustomFieldsRequestDto,
+  UpdateCustomersCustomFieldsTypeParamRequestDto,
+  UpdateCustomersCustomFieldsTypeBodyRequestDto,
 } from './dto';
 
-// NOTE: 타입을 한 번 설정하면 수정은 할 수 없도록 하였다.
 @Controller()
 export class CustomersCustomFieldsController {
   constructor(
@@ -52,6 +54,20 @@ export class CustomersCustomFieldsController {
     return this.customersCustomFieldsService.deleteCustomField(
       deleteCustomerCustomFieldsRequestDto,
       store,
+    );
+  }
+
+  @UpdateCustomerCustomFields()
+  updateCustomerCustomFields(
+    @JwtToken() { store }: AdminJwtRequestDto,
+    @Param()
+    paramDto: UpdateCustomersCustomFieldsTypeParamRequestDto,
+    @Body() bodyDto: UpdateCustomersCustomFieldsTypeBodyRequestDto,
+  ) {
+    return this.customersCustomFieldsService.updateTypeOfCustomField(
+      store,
+      paramDto,
+      bodyDto,
     );
   }
 }

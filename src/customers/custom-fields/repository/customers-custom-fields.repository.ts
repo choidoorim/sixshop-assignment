@@ -62,4 +62,16 @@ export class CustomersCustomFieldsRepository {
         id: customFieldId,
       },
     });
+
+  updateCustomFields = (
+    prismaConnection: PrismaConnection,
+    customFieldId: string,
+    data: Prisma.CustomerCustomFieldsUpdateInput,
+  ) =>
+    prismaConnection.customerCustomFields.update({
+      where: {
+        id: customFieldId,
+      },
+      data,
+    });
 }
