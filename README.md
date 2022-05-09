@@ -184,6 +184,9 @@ yarn start:dev
 #### http://localhost:3000/api 에서 문서 확인을 할 수 있습니다.
 
 # 기능 소개
+## 커스텀 필드
+어떻게 구상하고 짰는지 설명하기
+
 ## 1. Admin 회원가입 - POST /auth/register
 ```
 1. 이미 존재하는 유저인가?
@@ -234,14 +237,38 @@ yarn start:dev
 
 ## 6. Customer 커스텀 필드 삭제 - DELETE /customers/custom/fields/{customFieldId}
 ```
-1. 삭제하려는 커스텀 필드의 소유자가 맞는가?
+1. 존재하는 커스텀 필드인가?
     Yes - 다음 단계 진행
-    No - 
+    No - NotFound Exception: 커스텀 필드가 존재하지 않습니다.
+2. 삭제하려는 커스텀 필드의 소유자가 맞는가?
+    Yes - 다음 단계 진행
+    No - Forbidden Exception: store id 값이 다릅니다 
 ```
 
-## 7. Product 생성 - POST /products
+## 7. Customer 생성 - /customers
+```
+1. 커스텀 필드가 필요하지 않은데 body 를 통해 커스텀필드 데이터를 요청하고 있는가?
+    Yes - BadRequest Exception: 고객 커스텀 필드 데이터가 필요하지 않습니다
+    No - 다음 단계 진행
+2. 필수인 커스텀 필드가 있는데 body 를 통해 커스텀 필드 데이터를 요청하지 않고 있는가?
+    Yes - BadRequest Exception: 고객 커스텀 필드가 필요가 합니다
+    No - 다음 단계 진행
+3. 요청한 커스텀 필드 데이터들 중에 누락된 필수 커스텀 필드가 존재하는가?
+    Yes - BadRequest Exception: 필수 커스텀 필드 ID - ${id} 가 누락됐습니다
+    No - 다음 단계 진행
+4. 요청한 커스텀 필드의 Id 들이 모두 올바른가?
+    Yes - 다음 단계 진행 
+    No: BadRequest Exception: 잘못된 커스텀 필드 id 가 존재합니다
+5. 커스텀 필드의 타입과 요청하는 커스텀 필드 데이터들의 타입이 일치하는가?
+    Yes - 다음 단계 진행
+    No - BadRequest Exception: 데이터의 커스텀 필드 타입이 일치하지 않습니다
+6. 비밀번호 암호화
+7. 고객 생성 및 Customer 커스텀 필드 데이터가 있을 경우 추가로 생성
+```
 
-## 8. 상품 주문 - POST /orders
+## 9. Product 생성 - POST /products
+
+## 10. 상품 주문 - POST /orders
 
 ### 처음에는 store 라는 랜덤한 uuid 를 넣어주는 방식을 생각했다. 그런데 그렇게 되면 누가 커스텀 필드를 작성하고 생성할 것인지에 대한 것이 알 수 없었다.
 

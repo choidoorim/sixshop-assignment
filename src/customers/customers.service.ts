@@ -85,34 +85,38 @@ export class CustomersService {
   // customFields 에 속한 id 와 customerCustomFields 에 존재하는 id 와 일치하는 데이터들로만 이루어져있는지 확인해야 한다.
   private validateCustomFields = (
     customerCustomFields: CustomerCustomFields[] | null,
-    customFields?: CustomFields[],
+    requestCustomFields?: CustomFields[],
   ) => {
-    if (!customerCustomFields && customFields) {
+    // NOTE: 커스텀 필드가 필요하지 않는 경우
+    if (!customerCustomFields && requestCustomFields) {
       throw new BadRequestException(
         '고객 커스텀 필드 데이터가 필요하지 않습니다',
       );
     }
 
-    if (!customFields) {
+    if (!requestCustomFields) {
       if (this.isExistedRequired(customerCustomFields)) {
         throw new BadRequestException('고객 커스텀 필드 데이터가 필요합니다');
       }
     }
 
-    if (customerCustomFields && customFields) {
-      this.validateRequiredFields(customerCustomFields, customFields);
+    if (customerCustomFields && requestCustomFields) {
+      // NOTE: 커스텀 아이디가 모두 일치하는지 체크
+      if (customerCustomFields.length !== requestCustomFields.length) {
+        throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
+      }
+      this.validateRequiredFields(customerCustomFields, requestCustomFields);
 
-      customFields.forEach(({ customId, value }: CustomFields) => {
+      // NOTE: Type 체크
+      requestCustomFields.forEach(({ customId, value }: CustomFields) => {
         const result = customerCustomFields.find(
           ({ id }: CustomerCustomFields) => customId === id,
         );
-        if (!result) {
-          throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
-        }
-        // NOTE: Type 체크
         const { type } = result;
         if (!isRightType(value, type)) {
-          throw new BadRequestException();
+          throw new BadRequestException(
+            '데이터의 커스텀 필드 타입이 일치하지 않습니다',
+          );
         }
       });
     }
@@ -134,10 +138,6 @@ export class CustomersService {
   ) => {
     const customerCustomFields: CustomerCustomFields[] | null =
       await this.customersCustomFieldsService.getCustomFields(store);
-
-    if (_.isEmpty(customerCustomFields)) {
-      throw new NotFoundException();
-    }
 
     await this.validateCustomFields(customerCustomFields, customFields);
 
