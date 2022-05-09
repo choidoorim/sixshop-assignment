@@ -300,18 +300,18 @@ value - { "value": 커스텀 필드의 값 }
 1. Admin Token 검증
     Yes - 다음 단계 진행
     No - Unauthorized Exception
-2. 커스텀 필드가 필요하지 않은데 body 를 통해 커스텀필드 데이터를 요청하고 있는가?
+2. 이미 존재하는 유저인가?
+    Yes - Conflict Exception: 이미 가입된 회원입니다
+    No - 다음 단계 진행
+3. 커스텀 필드가 필요하지 않은데 body 를 통해 커스텀필드 데이터를 요청하고 있는가?
     Yes - BadRequest Exception: 고객 커스텀 필드 데이터가 필요하지 않습니다
     No - 다음 단계 진행
-3. 필수인 커스텀 필드가 있는데 body 를 통해 커스텀 필드 데이터를 요청하지 않고 있는가?
+4. 필수인 커스텀 필드가 있는데 body 를 통해 커스텀 필드 데이터를 요청하지 않고 있는가?
     Yes - BadRequest Exception: 고객 커스텀 필드가 필요가 합니다
     No - 다음 단계 진행
-4. 요청한 커스텀 필드 데이터들 중에 누락된 필수 커스텀 필드가 존재하는가?
+5. 요청한 커스텀 필드 데이터들 중에 누락된 필수 커스텀 필드가 존재하는가?
     Yes - BadRequest Exception: 필수 커스텀 필드 ID - ${id} 가 누락됐습니다
     No - 다음 단계 진행
-5. 요청한 커스텀 필드의 Id 들이 모두 올바른가?
-    Yes - 다음 단계 진행 
-    No: BadRequest Exception: 잘못된 커스텀 필드 id 가 존재합니다
 6. 커스텀 필드의 타입과 요청하는 커스텀 필드 데이터들의 타입이 일치하는가?
     Yes - 다음 단계 진행
     No - BadRequest Exception: 데이터의 커스텀 필드 타입이 일치하지 않습니다

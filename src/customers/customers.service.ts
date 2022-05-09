@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -44,7 +45,6 @@ export class CustomersService {
       this.prismaService,
       customerId,
     );
-    console.log(customer);
     if (!customer) {
       throw new NotFoundException('존재하지 않는 고객입니다');
     }
@@ -101,10 +101,6 @@ export class CustomersService {
     }
 
     if (customerCustomFields && requestCustomFields) {
-      // NOTE: 커스텀 아이디가 모두 일치하는지 체크
-      if (customerCustomFields.length !== requestCustomFields.length) {
-        throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
-      }
       this.validateRequiredFields(customerCustomFields, requestCustomFields);
 
       // NOTE: Type 체크
@@ -112,6 +108,9 @@ export class CustomersService {
         const result = customerCustomFields.find(
           ({ id }: CustomerCustomFields) => customId === id,
         );
+        if (!result) {
+          throw new BadRequestException('잘못된 커스텀 필드 id 가 존재합니다');
+        }
         const { type } = result;
         if (!isRightType(value, type)) {
           throw new BadRequestException(
@@ -132,10 +131,22 @@ export class CustomersService {
       value: { value },
     }));
 
+  private validateExistedCustomer = async (email: string) => {
+    const result = await this.customersRepository.getCustomerByEmail(
+      this.prismaService,
+      email,
+    );
+    if (result) {
+      throw new ConflictException('이미 가입된 회원입니다');
+    }
+  };
+
   createCustomer = async (
-    { customFields, password, ...customerDto }: CreateCustomerRequestDto,
+    { customFields, email, password, ...customerDto }: CreateCustomerRequestDto,
     store: string,
   ) => {
+    await this.validateExistedCustomer(email);
+
     const customerCustomFields: CustomerCustomFields[] | null =
       await this.customersCustomFieldsService.getCustomFields(store);
 
@@ -150,7 +161,10 @@ export class CustomersService {
     try {
       await this.prismaService.$transaction(async (prisma) => {
         const { id: customerId } =
-          await this.customersRepository.createCustomer(prisma, customerData);
+          await this.customersRepository.createCustomer(prisma, {
+            ...customerData,
+            email,
+          });
         if (customFields) {
           const payload = this.parseCustomFields(customFields, customerId);
           await this.customersCustomFieldsDataRepository.createCustomFieldsData(

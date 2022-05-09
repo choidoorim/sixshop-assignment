@@ -34,4 +34,11 @@ export class CustomersRepository {
         id: customerId,
       },
     });
+
+  getCustomerByEmail = (prismaConnection: PrismaConnection, email: string) =>
+    prismaConnection.customer.findUnique({
+      where: {
+        email,
+      },
+    });
 }
