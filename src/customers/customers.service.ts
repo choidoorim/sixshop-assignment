@@ -190,8 +190,6 @@ export class CustomersService {
 
     // 2. 기존 CustomerCustomFieldsData 와 CustomerCustomFields 의 customFieldsId 와 id 가 같은 값들을 매칭해서 key-value 를 찾아준다.
     return customerCustomFieldsData.map(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       ({ id, customFieldsId, value }: CustomerCustomFieldsData) => {
         const { key } = customFields.find(
           ({ id }: CustomerCustomFields) => customFieldsId === id,
@@ -215,7 +213,7 @@ export class CustomersService {
     );
 
     if (!customer) {
-      throw new NotFoundException();
+      throw new NotFoundException('존재하지 않는 고객입니다');
     }
 
     const {

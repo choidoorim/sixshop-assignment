@@ -1,7 +1,7 @@
 import { applyDecorators, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { JwtTokenAuth } from '@app/utils/guard';
+import { JwtAdminAuth } from '@app/utils/guard';
 import { ApiDoc } from '@app/config/decorator';
 
 import { CreateProductRequestDto } from './dto';
@@ -12,7 +12,7 @@ export const ProductsController = () =>
 export const CreateProduct = () =>
   applyDecorators(
     Post(),
-    JwtTokenAuth(),
+    JwtAdminAuth(),
     ApiDoc({
       summary: '상품 생성 API',
       createdRes: {

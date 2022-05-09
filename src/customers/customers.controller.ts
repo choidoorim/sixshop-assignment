@@ -1,7 +1,7 @@
 import { JwtToken } from '@app/utils';
 import { Body, Param } from '@nestjs/common';
 
-import { StoreJwtRequestDto } from '@api/shared/dto';
+import { AdminJwtRequestDto } from '@api/shared/dto';
 
 import {
   CustomersController as Controller,
@@ -18,7 +18,7 @@ export class CustomersController {
 
   @CreateCustomer()
   createCustomer(
-    @JwtToken() { store }: StoreJwtRequestDto,
+    @JwtToken() { store }: AdminJwtRequestDto,
     @Body() createCustomerRequestDto: CreateCustomerRequestDto,
   ) {
     return this.customersService.createCustomer(
@@ -29,7 +29,7 @@ export class CustomersController {
 
   @GetCustomer()
   async getCustomer(
-    @JwtToken() { store }: StoreJwtRequestDto,
+    @JwtToken() { store }: AdminJwtRequestDto,
     @Param() getCustomerRequestDto: GetCustomerRequestDto,
   ) {
     const result = await this.customersService.getCustomer(

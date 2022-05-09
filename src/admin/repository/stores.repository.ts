@@ -24,18 +24,4 @@ export class StoresRepository {
         adminId,
       },
     });
-
-  updateToken = (
-    prismaConnection: PrismaConnection,
-    storeId: string,
-    token: string,
-  ) =>
-    prismaConnection.store.update({
-      where: {
-        id: storeId,
-      },
-      data: {
-        token,
-      },
-    });
 }

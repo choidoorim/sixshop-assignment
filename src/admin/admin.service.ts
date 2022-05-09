@@ -48,10 +48,7 @@ export class AdminService {
           payload,
         );
 
-        const { id } = await this.storesRepository.createStore(prisma, adminId);
-
-        const token = this.jwtService.sign({ store: id });
-        await this.storesRepository.updateToken(prisma, id, token);
+        await this.storesRepository.createStore(prisma, adminId);
       });
 
       return null;
@@ -65,13 +62,4 @@ export class AdminService {
 
   getStore = (adminId: string) =>
     this.storesRepository.getStore(this.prismaService, adminId);
-
-  getStoreToken = async (adminId: string) => {
-    const { token } = await this.storesRepository.getStore(
-      this.prismaService,
-      adminId,
-    );
-
-    return token;
-  };
 }

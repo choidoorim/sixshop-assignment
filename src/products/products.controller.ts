@@ -1,7 +1,7 @@
 import { Body } from '@nestjs/common';
 
 import { JwtToken } from '@app/utils';
-import { StoreJwtRequestDto } from '@api/shared/dto';
+import { AdminJwtRequestDto } from '@api/shared/dto';
 
 import {
   ProductsController as Controller,
@@ -16,7 +16,7 @@ export class ProductsController {
 
   @CreateProduct()
   createProduct(
-    @JwtToken() { store }: StoreJwtRequestDto,
+    @JwtToken() { store }: AdminJwtRequestDto,
     @Body() createProductRequestDto: CreateProductRequestDto,
   ) {
     return this.productsService.createProduct(createProductRequestDto, store);

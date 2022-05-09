@@ -47,7 +47,7 @@ export class OrdersService {
     );
 
     if (totalPrice !== comparedPrice) {
-      throw new BadRequestException('총 금액이 일치하지 않습니다');
+      throw new BadRequestException('상품의 총 금액이 일치하지 않습니다');
     }
   };
 

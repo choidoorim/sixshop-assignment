@@ -1,6 +1,6 @@
 import { applyDecorators, Controller, Get, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtTokenAuth } from '@app/utils/guard/jwt-token-auth.guard';
+import { JwtAdminAuth } from '@app/utils/guard';
 import { ApiDoc } from '@app/config/decorator';
 
 import { CreateCustomerRequestDto, GetCustomerResponseDto } from './dto';
@@ -11,7 +11,7 @@ export const CustomersController = () =>
 export const CreateCustomer = () =>
   applyDecorators(
     Post(),
-    JwtTokenAuth(),
+    JwtAdminAuth(),
     ApiDoc({
       summary: '고객 생성 API',
       createdRes: {
@@ -24,7 +24,7 @@ export const CreateCustomer = () =>
 export const GetCustomer = () =>
   applyDecorators(
     Get('/:customerId'),
-    JwtTokenAuth(),
+    JwtAdminAuth(),
     ApiDoc({
       summary: '고객 정보 조회 API',
       createdRes: {
@@ -36,7 +36,7 @@ export const GetCustomer = () =>
 export const UpdateCustomer = () =>
   applyDecorators(
     Put('/:customerId'),
-    JwtTokenAuth(),
+    JwtAdminAuth(),
     ApiDoc({
       summary: '고객 정보 수정 API',
     }),

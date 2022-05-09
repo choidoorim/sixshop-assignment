@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-import { JwtTokenStrategy } from '@app/utils/strategy';
 import { BcryptModule } from '@app/utils/bcrypt';
 
 import { AdminController } from './admin.controller';
@@ -20,12 +19,7 @@ import { AdminRepository, StoresRepository } from './repository';
     BcryptModule,
   ],
   controllers: [AdminController],
-  providers: [
-    AdminService,
-    AdminRepository,
-    StoresRepository,
-    JwtTokenStrategy,
-  ],
+  providers: [AdminService, AdminRepository, StoresRepository],
   exports: [AdminService, AdminRepository, StoresRepository],
 })
 export class AdminModule {}
