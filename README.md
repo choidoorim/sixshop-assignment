@@ -1,5 +1,5 @@
 # ERD
-![Sixshop-ERD](https://user-images.githubusercontent.com/63203480/167356414-65ebe4c7-cdda-43af-97ca-5343b84472a4.png)
+![postgres](https://user-images.githubusercontent.com/63203480/167431579-ef113295-22b5-418e-ad03-3277c12d1780.png)
 
 ### 1. Admin, Store
 - 하나의 Admin 계정은 하나의 상점을 가질 수 있습니다.
